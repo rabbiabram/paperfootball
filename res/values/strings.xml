@@ -4,5 +4,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_game_field">GameField</string>
+    <string name="game_field">Game Field</string>
 
 </resources>
