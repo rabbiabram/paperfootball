@@ -4,10 +4,11 @@ import java.util.Vector;
 
 public class GameMap extends BaseGameMap {
 	Vector<Cell> mCells;
+	Vector<Link> mLinks;
 
 	public static final int CELLS_COUNT = 99;
-	public static final int CELLS_ROW_COUNT = 11;
-	public static final int CELLS_COL_COUNT = 9;
+	public static final int CELLS_COL_COUNT = 11;
+	public static final int CELLS_ROW_COUNT = 9;
 	public static final int INDEX_WIDTH_MIN = 0;
 	public static final int INDEX_WIDTH_MAX = 10;
 	public static final int INDEX_WIDTH_CENTER = (INDEX_WIDTH_MAX - INDEX_WIDTH_MIN) / 2;
@@ -19,53 +20,67 @@ public class GameMap extends BaseGameMap {
 
 	public GameMap() {
 		this.mCells = new Vector<Cell>(GameMap.CELLS_COUNT);
+		this.mLinks = new Vector<Link>(1000);
 
-		for (int i = 0; i < GameMap.CELLS_COUNT; i++) {
-			int relation = Cell.EMPTY;
+		for (int x = GameMap.INDEX_WIDTH_MIN; x < GameMap.CELLS_COL_COUNT; x++) {
+			for (int y = GameMap.INDEX_HEIGHT_MIN; y < GameMap.CELLS_ROW_COUNT; y++) {
+				this.mCells.add(new Cell(x, y));
+			}
+		}
 
-			if (i < GameMap.CELLS_ROW_COUNT) {
-				relation |= Cell.LEFT | Cell.UP_LEFT | Cell.UP |
-						Cell.UP_RIGHT | Cell.RIGHT;
-			}
-			if (i >= GameMap.CELLS_COUNT -  GameMap.CELLS_ROW_COUNT) {
-				relation |= Cell.LEFT | Cell.DOWN_LEFT | Cell.DOWN |
-						Cell.DOWN_RIGHT | Cell.RIGHT;
-			}
-			if (i % GameMap.CELLS_ROW_COUNT == GameMap.INDEX_WIDTH_MIN) {
-				relation |= Cell.DOWN | Cell.DOWN_LEFT | Cell.LEFT |
-						Cell.UP_LEFT | Cell.UP;
-			}
-			if (i % GameMap.CELLS_ROW_COUNT == GameMap.INDEX_WIDTH_MAX) {
-				relation |= Cell.UP | Cell.UP_RIGHT | Cell.RIGHT |
-						Cell.DOWN_RIGHT | Cell.DOWN;
-			}
-			if ((i % GameMap.CELLS_ROW_COUNT == GameMap.INDEX_WIDTH_CENTER - FRONT_LINE_OFFSET) ||
-					(i % GameMap.CELLS_ROW_COUNT == GameMap.INDEX_WIDTH_CENTER) ||
-					(i % GameMap.CELLS_ROW_COUNT == GameMap.INDEX_WIDTH_CENTER + FRONT_LINE_OFFSET)) {
-				relation |= Cell.UP | Cell.DOWN;
+		for (int x = GameMap.INDEX_WIDTH_MIN; x < GameMap.INDEX_WIDTH_MAX; x++) {
+			Cell a0 = this.getCell(x, GameMap.INDEX_HEIGHT_MIN);
+			Cell b0 = this.getCell(x + 1, GameMap.INDEX_HEIGHT_MIN);
+			Cell a = this.getCell(x, GameMap.INDEX_HEIGHT_MAX);
+			Cell b = this.getCell(x + 1, GameMap.INDEX_HEIGHT_MAX);
+
+			this.mLinks.add(new Link(a0, b0));
+			this.mLinks.add(new Link(a, b));
+		}
+
+		for (int y = GameMap.INDEX_HEIGHT_MIN; y < GameMap.INDEX_HEIGHT_MAX; y++) {
+
+			if ((y < GameMap.INDEX_HEIGHT_CENTER - GameMap.GOAL_LINE_OFFSET) ||
+					(y >= GameMap.INDEX_HEIGHT_CENTER + GameMap.GOAL_LINE_OFFSET)) {
+				Cell a0 = this.getCell(GameMap.INDEX_WIDTH_MIN, y);
+				Cell b0 = this.getCell(GameMap.INDEX_WIDTH_MIN, y + 1);
+				Cell a1 = this.getCell(GameMap.INDEX_WIDTH_MAX, y);
+				Cell b1 = this.getCell(GameMap.INDEX_WIDTH_MAX, y + 1);
+
+				this.mLinks.add(new Link(a0, b0));
+				this.mLinks.add(new Link(a1, b1));
 			}
 
-			if ((i / GameMap.CELLS_ROW_COUNT == GameMap.INDEX_HEIGHT_CENTER) &&
-					((i % GameMap.CELLS_ROW_COUNT == GameMap.INDEX_WIDTH_MIN) ||
-							(i % GameMap.CELLS_ROW_COUNT == GameMap.INDEX_WIDTH_MAX))) {
-				relation = Cell.EMPTY;
-			}
-			if ((i / GameMap.CELLS_ROW_COUNT == GameMap.INDEX_HEIGHT_CENTER - GameMap.GOAL_LINE_OFFSET) &&
-					((i % GameMap.CELLS_ROW_COUNT == GameMap.INDEX_WIDTH_MIN) ||
-							(i % GameMap.CELLS_ROW_COUNT == GameMap.INDEX_WIDTH_MAX))) {
-				relation -= Cell.DOWN;
-			}
-			if ((i / GameMap.CELLS_ROW_COUNT == GameMap.INDEX_HEIGHT_CENTER + GameMap.GOAL_LINE_OFFSET) &&
-					((i % GameMap.CELLS_ROW_COUNT == GameMap.INDEX_WIDTH_MIN) ||
-							(i % GameMap.CELLS_ROW_COUNT == GameMap.INDEX_WIDTH_MAX))) {
-				relation -= Cell.UP;
-			}
-			this.mCells.add(new Cell(relation));
+			Cell a2 = this.getCell(GameMap.INDEX_WIDTH_CENTER - GameMap.FRONT_LINE_OFFSET, y);
+			Cell b2 = this.getCell(GameMap.INDEX_WIDTH_CENTER - GameMap.FRONT_LINE_OFFSET, y + 1);
+			Cell a3 = this.getCell(GameMap.INDEX_WIDTH_CENTER, y);
+			Cell b3 = this.getCell(GameMap.INDEX_WIDTH_CENTER, y + 1);
+			Cell a4 = this.getCell(GameMap.INDEX_WIDTH_CENTER + GameMap.FRONT_LINE_OFFSET, y);
+			Cell b4 = this.getCell(GameMap.INDEX_WIDTH_CENTER + GameMap.FRONT_LINE_OFFSET, y + 1);
+
+			this.mLinks.add(new Link(a2, b2));
+			this.mLinks.add(new Link(a3, b3));
+			this.mLinks.add(new Link(a4, b4));
 		}
 	}
 
-	public Vector<Cell> getCells() {
-		return this.mCells;
+	public Cell getCell(int x, int y) {
+		for (Cell cell : this.mCells) {
+			if (cell.isLocate(x, y)) {
+				return cell;
+			}
+		}
+		return null;
+	}
+
+	public boolean isLinked(Cell a, Cell b) {
+		for (Link link : this.mLinks) {
+			if ((a.equals(link.getA()) && b.equals(link.getB())) ||
+					(b.equals(link.getA()) && a.equals(link.getB()))) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

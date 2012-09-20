@@ -35,8 +35,8 @@ public class GameFieldView extends SurfaceView implements SurfaceHolder.Callback
 	public void surfaceChanged(SurfaceHolder arg0, int arg1, int arg2, int arg3) {
 	}
 	@Override
-	public void surfaceCreated(SurfaceHolder arg0) {
-        Canvas C = arg0.lockCanvas();
+	public void surfaceCreated(SurfaceHolder surfaceHolder) {
+        Canvas C = surfaceHolder.lockCanvas();
 
         try {
     		Picture picture = new Picture();
@@ -45,7 +45,7 @@ public class GameFieldView extends SurfaceView implements SurfaceHolder.Callback
         	this.mPainter.draw(canvas);
     		picture.draw(C);
         } finally{
-        	arg0.unlockCanvasAndPost(C);
+        	surfaceHolder.unlockCanvasAndPost(C);
         }
 	}
 	@Override
