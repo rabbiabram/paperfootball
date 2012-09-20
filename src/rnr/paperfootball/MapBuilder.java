@@ -23,12 +23,6 @@ public class MapBuilder extends BaseMapBuilder {
 
 	@Override
 	public BaseMapPainter createMapPainter(BaseGameMap gameMap) {
-		return new MapPainter((GameMap)gameMap, (CellValidator)this.createCellValidator(gameMap));
+		return new MapPainter((GameMap)gameMap);
 	}
-
-	@Override
-	public BaseCellValidator createCellValidator(BaseGameMap gameMap) {
-		return new CellValidator((GameMap)gameMap);
-	}
-
 }

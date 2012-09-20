@@ -11,6 +11,4 @@ public abstract class BaseMapBuilder {
 	public abstract BaseGameMap createMap();
 	public abstract BaseMapRanger createMapRanger(BaseGameMap gameMap);
 	public abstract BaseMapPainter createMapPainter(BaseGameMap gameMap);
-	public abstract BaseCellValidator createCellValidator(BaseGameMap gameMap);
-
 }
