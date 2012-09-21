@@ -1,7 +1,10 @@
 
-package rnr.paperfootball;
+package com.rnr.paperfootball.core;
 
 import java.util.Vector;
+
+import com.rnr.paperfootball.base.BaseMap;
+import com.rnr.paperfootball.base.BasePlayer;
 
 /**
  *
@@ -10,7 +13,7 @@ import java.util.Vector;
  */
 public class Game extends Thread {
 	public static final int MIN_PLAYERS_COUNT = 2;
-	private BaseGameMap mGameMap;
+	private BaseMap mGameMap;
 	private Vector<BasePlayer> mPlayers;
 	private BasePlayer mCurrentPlayer;
 	private int mTurnCount;
@@ -22,12 +25,12 @@ public class Game extends Thread {
 	// Показывает, в процессе ли игра.
 	private boolean isStart;
 
-	public BaseGameMap getMap() {
+	public BaseMap getMap() {
 		return this.mGameMap;
 	};
 
 
-	public Game(BaseGameMap gameMap) {
+	public Game(BaseMap gameMap) {
 		this.mGameMap = gameMap;
 		this.mPlayers = new Vector<BasePlayer>();
 		this.isStart = false;
@@ -59,6 +62,7 @@ public class Game extends Thread {
 		}
 
 		this.mCurrentPlayer = this.mPlayers.firstElement();
+
 		this.start();
 	}
 	public void run() {

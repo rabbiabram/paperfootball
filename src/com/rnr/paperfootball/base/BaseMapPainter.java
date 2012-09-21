@@ -1,7 +1,7 @@
 /**
  *
  */
-package rnr.paperfootball;
+package com.rnr.paperfootball.base;
 
 import android.graphics.Canvas;
 

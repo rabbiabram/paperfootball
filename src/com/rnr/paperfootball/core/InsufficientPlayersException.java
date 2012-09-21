@@ -1,7 +1,7 @@
 /**
  *
  */
-package rnr.paperfootball;
+package com.rnr.paperfootball.core;
 
 /**
  * @author rodnover
