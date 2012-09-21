@@ -5,6 +5,11 @@ import java.util.Vector;
 public class GameMap extends BaseGameMap {
 	Vector<Cell> mCells;
 	Vector<Link> mLinks;
+	Cell mCurrent;
+
+	public Cell getCurrent() {
+		return this.mCurrent;
+	}
 
 	public static final int CELLS_COUNT = 99;
 	public static final int CELLS_COL_COUNT = 11;
@@ -37,6 +42,8 @@ public class GameMap extends BaseGameMap {
 			this.mLinks.add(new Link(a0, b0));
 			this.mLinks.add(new Link(a, b));
 		}
+
+		this.mCurrent = this.getCell(GameMap.INDEX_WIDTH_CENTER, GameMap.INDEX_HEIGHT_CENTER);
 
 		for (int y = GameMap.INDEX_HEIGHT_MIN; y < GameMap.INDEX_HEIGHT_MAX; y++) {
 
