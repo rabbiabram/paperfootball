@@ -1,9 +1,11 @@
 /**
  *
  */
-package rnr.paperfootball;
+package com.rnr.paperfootball.base;
 
 import java.util.Vector;
+
+import com.rnr.paperfootball.core.Cell;
 
 /**
  * @author rodnover
@@ -26,7 +28,7 @@ public class BasePlayer {
 		this.mName = name;
 	}
 
-	public Vector<Cell> Turn(BaseGameMap gameMap) {
+	public Vector<Cell> Turn(BaseMap gameMap) {
 		// TODO Auto-generated method stub
 		return null;
 	}

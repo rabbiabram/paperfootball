@@ -1,8 +1,13 @@
-package rnr.paperfootball;
+package com.rnr.paperfootball.map;
 
 import java.util.Vector;
 
-public class GameMap extends BaseGameMap {
+import com.rnr.paperfootball.base.BaseMap;
+import com.rnr.paperfootball.core.Cell;
+import com.rnr.paperfootball.core.GameCallback;
+import com.rnr.paperfootball.core.Link;
+
+public class Map extends BaseMap {
 	Vector<Cell> mCells;
 	Vector<Link> mLinks;
 	Cell mCurrent;
@@ -24,48 +29,47 @@ public class GameMap extends BaseGameMap {
 	public static final int FRONT_LINE_OFFSET = 2;
 	public static final int GOAL_LINE_OFFSET = 1;
 
-	public GameMap() {
-		this.mCells = new Vector<Cell>(GameMap.CELLS_COUNT);
+	public Map() {
+		this.mCells = new Vector<Cell>(Map.CELLS_COUNT);
 		this.mLinks = new Vector<Link>();
-		this.mHandlers = new Vector<GameCallback>();
 
-		for (int x = GameMap.INDEX_WIDTH_MIN; x < GameMap.CELLS_COL_COUNT; x++) {
-			for (int y = GameMap.INDEX_HEIGHT_MIN; y < GameMap.CELLS_ROW_COUNT; y++) {
+		for (int x = Map.INDEX_WIDTH_MIN; x < Map.CELLS_COL_COUNT; x++) {
+			for (int y = Map.INDEX_HEIGHT_MIN; y < Map.CELLS_ROW_COUNT; y++) {
 				this.mCells.add(new Cell(x, y));
 			}
 		}
 
-		for (int x = GameMap.INDEX_WIDTH_MIN; x < GameMap.INDEX_WIDTH_MAX; x++) {
-			Cell a0 = this.getCell(new Cell(x, GameMap.INDEX_HEIGHT_MIN));
-			Cell b0 = this.getCell(new Cell(x + 1, GameMap.INDEX_HEIGHT_MIN));
-			Cell a = this.getCell(new Cell(x, GameMap.INDEX_HEIGHT_MAX));
-			Cell b = this.getCell(new Cell(x + 1, GameMap.INDEX_HEIGHT_MAX));
+		for (int x = Map.INDEX_WIDTH_MIN; x < Map.INDEX_WIDTH_MAX; x++) {
+			Cell a0 = this.getCell(new Cell(x, Map.INDEX_HEIGHT_MIN));
+			Cell b0 = this.getCell(new Cell(x + 1, Map.INDEX_HEIGHT_MIN));
+			Cell a = this.getCell(new Cell(x, Map.INDEX_HEIGHT_MAX));
+			Cell b = this.getCell(new Cell(x + 1, Map.INDEX_HEIGHT_MAX));
 
 			this.mLinks.add(new Link(a0, b0));
 			this.mLinks.add(new Link(a, b));
 		}
 
-		this.mCurrent = this.getCell(new Cell(GameMap.INDEX_WIDTH_CENTER, GameMap.INDEX_HEIGHT_CENTER));
+		this.mCurrent = this.getCell(new Cell(Map.INDEX_WIDTH_CENTER, Map.INDEX_HEIGHT_CENTER));
 
-		for (int y = GameMap.INDEX_HEIGHT_MIN; y < GameMap.INDEX_HEIGHT_MAX; y++) {
+		for (int y = Map.INDEX_HEIGHT_MIN; y < Map.INDEX_HEIGHT_MAX; y++) {
 
-			if ((y < GameMap.INDEX_HEIGHT_CENTER - GameMap.GOAL_LINE_OFFSET) ||
-					(y >= GameMap.INDEX_HEIGHT_CENTER + GameMap.GOAL_LINE_OFFSET)) {
-				Cell a0 = this.getCell(new Cell(GameMap.INDEX_WIDTH_MIN, y));
-				Cell b0 = this.getCell(new Cell(GameMap.INDEX_WIDTH_MIN, y + 1));
-				Cell a1 = this.getCell(new Cell(GameMap.INDEX_WIDTH_MAX, y));
-				Cell b1 = this.getCell(new Cell(GameMap.INDEX_WIDTH_MAX, y + 1));
+			if ((y < Map.INDEX_HEIGHT_CENTER - Map.GOAL_LINE_OFFSET) ||
+					(y >= Map.INDEX_HEIGHT_CENTER + Map.GOAL_LINE_OFFSET)) {
+				Cell a0 = this.getCell(new Cell(Map.INDEX_WIDTH_MIN, y));
+				Cell b0 = this.getCell(new Cell(Map.INDEX_WIDTH_MIN, y + 1));
+				Cell a1 = this.getCell(new Cell(Map.INDEX_WIDTH_MAX, y));
+				Cell b1 = this.getCell(new Cell(Map.INDEX_WIDTH_MAX, y + 1));
 
 				this.mLinks.add(new Link(a0, b0));
 				this.mLinks.add(new Link(a1, b1));
 			}
 
-			Cell a2 = this.getCell(new Cell(GameMap.INDEX_WIDTH_CENTER - GameMap.FRONT_LINE_OFFSET, y));
-			Cell b2 = this.getCell(new Cell(GameMap.INDEX_WIDTH_CENTER - GameMap.FRONT_LINE_OFFSET, y + 1));
-			Cell a3 = this.getCell(new Cell(GameMap.INDEX_WIDTH_CENTER, y));
-			Cell b3 = this.getCell(new Cell(GameMap.INDEX_WIDTH_CENTER, y + 1));
-			Cell a4 = this.getCell(new Cell(GameMap.INDEX_WIDTH_CENTER + GameMap.FRONT_LINE_OFFSET, y));
-			Cell b4 = this.getCell(new Cell(GameMap.INDEX_WIDTH_CENTER + GameMap.FRONT_LINE_OFFSET, y + 1));
+			Cell a2 = this.getCell(new Cell(Map.INDEX_WIDTH_CENTER - Map.FRONT_LINE_OFFSET, y));
+			Cell b2 = this.getCell(new Cell(Map.INDEX_WIDTH_CENTER - Map.FRONT_LINE_OFFSET, y + 1));
+			Cell a3 = this.getCell(new Cell(Map.INDEX_WIDTH_CENTER, y));
+			Cell b3 = this.getCell(new Cell(Map.INDEX_WIDTH_CENTER, y + 1));
+			Cell a4 = this.getCell(new Cell(Map.INDEX_WIDTH_CENTER + Map.FRONT_LINE_OFFSET, y));
+			Cell b4 = this.getCell(new Cell(Map.INDEX_WIDTH_CENTER + Map.FRONT_LINE_OFFSET, y + 1));
 
 			this.mLinks.add(new Link(a2, b2));
 			this.mLinks.add(new Link(a3, b3));
@@ -97,6 +101,10 @@ public class GameMap extends BaseGameMap {
 
 	@Override
 	public boolean validate(Vector<Cell> path) {
+		if (path == null) {
+			return false;
+		}
+
 		int pathSize = path.size();
 
 		if (pathSize < 1) {

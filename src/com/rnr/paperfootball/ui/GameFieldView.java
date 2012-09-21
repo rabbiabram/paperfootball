@@ -1,4 +1,8 @@
-package rnr.paperfootball;
+package com.rnr.paperfootball.ui;
+
+import com.rnr.paperfootball.base.BaseMap;
+import com.rnr.paperfootball.base.BaseMapPainter;
+import com.rnr.paperfootball.core.GameCallback;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -9,8 +13,12 @@ import android.view.SurfaceView;
 
 public class GameFieldView extends SurfaceView implements SurfaceHolder.Callback, GameCallback {
 	private BaseMapPainter mPainter;
+	private boolean mSurfaceCreated;
 
 	private void paintField(SurfaceHolder surfaceHolder) {
+		if (!this.mSurfaceCreated) {
+			return;
+		}
         Canvas C = surfaceHolder.lockCanvas();
 
         try {
@@ -25,6 +33,7 @@ public class GameFieldView extends SurfaceView implements SurfaceHolder.Callback
 	}
 
 	protected void initView() {
+		this.mSurfaceCreated = false;
 		this.getHolder().addCallback(this);
 	}
 
@@ -53,15 +62,17 @@ public class GameFieldView extends SurfaceView implements SurfaceHolder.Callback
 	}
 	@Override
 	public void surfaceCreated(SurfaceHolder surfaceHolder) {
+		this.mSurfaceCreated = true;
 		this.paintField(surfaceHolder);
 	}
 
 	@Override
 	public void surfaceDestroyed(SurfaceHolder arg0) {
+		this.mSurfaceCreated = false;
 	}
 
 	@Override
-	public void repaint(BaseGameMap map) {
+	public void repaint(BaseMap map) {
 		this.paintField(this.getHolder());
 	}
 

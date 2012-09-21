@@ -1,4 +1,11 @@
-package rnr.paperfootball;
+package com.rnr.paperfootball.ui;
+
+import com.rnr.paperfootball.TestPlayer;
+import com.rnr.paperfootball.base.BaseMapBuilder;
+import com.rnr.paperfootball.base.BasePlayer;
+import com.rnr.paperfootball.core.Game;
+import com.rnr.paperfootball.core.InsufficientPlayersException;
+import com.rnr.paperfootball.map.MapBuilder;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -26,6 +33,7 @@ public class GameField extends Activity {
 
         this.mGame.addPlayer(new TestPlayer());
         this.mGame.addPlayer(new BasePlayer());
+
         try {
 			this.mGame.startGame();
 		} catch (InsufficientPlayersException e) {

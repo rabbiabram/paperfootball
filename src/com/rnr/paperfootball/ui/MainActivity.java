@@ -1,4 +1,5 @@
-package rnr.paperfootball;
+package com.rnr.paperfootball.ui;
+
 
 import android.app.Activity;
 import android.content.Intent;

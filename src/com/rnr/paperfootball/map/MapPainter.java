@@ -1,7 +1,10 @@
 /**
  *
  */
-package rnr.paperfootball;
+package com.rnr.paperfootball.map;
+
+import com.rnr.paperfootball.base.BaseMapPainter;
+import com.rnr.paperfootball.core.Cell;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -14,9 +17,9 @@ import android.graphics.Paint;
 public class MapPainter extends BaseMapPainter {
 
 	private int mWidthCell;
-	private GameMap mGameMap;
+	private Map mGameMap;
 
-	public MapPainter(GameMap gameMap) {
+	public MapPainter(Map gameMap) {
 		this.mWidthCell = 30;
 		this.mGameMap = gameMap;
 	}
@@ -24,7 +27,7 @@ public class MapPainter extends BaseMapPainter {
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see rnr.paperfootball.BaseMapPainter#draw(android.graphics.Canvas)
+	 * @see com.rnr.paperfootball.BaseMapPainter#draw(android.graphics.Canvas)
 	 */
 	@Override
 	public void draw(Canvas canvas) {
@@ -40,8 +43,8 @@ public class MapPainter extends BaseMapPainter {
 
 		// Рисуем сетку
 		// Рисуем от каждой точки справа и снизу
-		for (int y = GameMap.INDEX_HEIGHT_MIN; y < GameMap.INDEX_HEIGHT_MAX; y++) {
-			for (int x = GameMap.INDEX_WIDTH_MIN; x < GameMap.INDEX_WIDTH_MAX; x++) {
+		for (int y = Map.INDEX_HEIGHT_MIN; y < Map.INDEX_HEIGHT_MAX; y++) {
+			for (int x = Map.INDEX_WIDTH_MIN; x < Map.INDEX_WIDTH_MAX; x++) {
 				Cell cellA = this.mGameMap.getCell(new Cell(x, y));
 				Cell cellAX = this.mGameMap.getCell(new Cell(x + 1, y));
 				Cell cellAY = this.mGameMap.getCell(new Cell(x, y + 1));
@@ -56,8 +59,8 @@ public class MapPainter extends BaseMapPainter {
 			}
 		}
 		// Крайние линии снизу
-		for (int y = GameMap.INDEX_HEIGHT_MIN; y < GameMap.INDEX_HEIGHT_MAX; y++) {
-			int x = GameMap.CELLS_COL_COUNT - 1;
+		for (int y = Map.INDEX_HEIGHT_MIN; y < Map.INDEX_HEIGHT_MAX; y++) {
+			int x = Map.CELLS_COL_COUNT - 1;
 			Cell cellA = this.mGameMap.getCell(new Cell(x, y));
 			Cell cellB = this.mGameMap.getCell(new Cell(x, y + 1));
 
@@ -67,8 +70,8 @@ public class MapPainter extends BaseMapPainter {
 					x * this.mWidthCell, (y + 1) * this.mWidthCell, pY);
 		}
 		// Крайние линии справа
-		for (int x = GameMap.INDEX_WIDTH_MIN; x < GameMap.INDEX_WIDTH_MAX; x++) {
-			int y = GameMap.CELLS_ROW_COUNT - 1;
+		for (int x = Map.INDEX_WIDTH_MIN; x < Map.INDEX_WIDTH_MAX; x++) {
+			int y = Map.CELLS_ROW_COUNT - 1;
 			Cell cellA = this.mGameMap.getCell(new Cell(x, y));
 			Cell cellB = this.mGameMap.getCell(new Cell(x + 1, y));
 
