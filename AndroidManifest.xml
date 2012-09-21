@@ -20,7 +20,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.rnr.paperfootball.ui.GameField"></activity>
+        <activity android:name=".ui.GameFieldActivity"></activity>
     </application>
 
 </manifest>
