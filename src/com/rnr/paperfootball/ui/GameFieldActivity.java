@@ -11,7 +11,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 
-public class GameFieldActivity extends Activity implements PathGetter {
+public class GameFieldActivity extends Activity {
 
 	private Game mGame;
 	private BaseMapBuilder mGameBuilder;
