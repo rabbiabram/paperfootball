@@ -42,9 +42,9 @@ public class MapPainter extends BaseMapPainter {
 		// Рисуем от каждой точки справа и снизу
 		for (int y = GameMap.INDEX_HEIGHT_MIN; y < GameMap.INDEX_HEIGHT_MAX; y++) {
 			for (int x = GameMap.INDEX_WIDTH_MIN; x < GameMap.INDEX_WIDTH_MAX; x++) {
-				Cell cellA = this.mGameMap.getCell(x, y);
-				Cell cellAX = this.mGameMap.getCell(x + 1, y);
-				Cell cellAY = this.mGameMap.getCell(x, y + 1);
+				Cell cellA = this.mGameMap.getCell(new Cell(x, y));
+				Cell cellAX = this.mGameMap.getCell(new Cell(x + 1, y));
+				Cell cellAY = this.mGameMap.getCell(new Cell(x, y + 1));
 
 				Paint pX = (this.mGameMap.isLinked(cellA, cellAX))?(pLine):(pEmptyLine);
 				Paint pY = (this.mGameMap.isLinked(cellA, cellAY))?(pLine):(pEmptyLine);
@@ -55,28 +55,36 @@ public class MapPainter extends BaseMapPainter {
 						x * this.mWidthCell, (y + 1) * this.mWidthCell, pY);
 			}
 		}
-		// Крайние линии снизу и сверху
+		// Крайние линии снизу
 		for (int y = GameMap.INDEX_HEIGHT_MIN; y < GameMap.INDEX_HEIGHT_MAX; y++) {
 			int x = GameMap.CELLS_COL_COUNT - 1;
-			Cell cellA = this.mGameMap.getCell(x, y);
-			Cell cellB = this.mGameMap.getCell(x, y + 1);
+			Cell cellA = this.mGameMap.getCell(new Cell(x, y));
+			Cell cellB = this.mGameMap.getCell(new Cell(x, y + 1));
 
 			Paint pY = (this.mGameMap.isLinked(cellA, cellB))?(pLine):(pEmptyLine);
 
 			canvas.drawLine(x * this.mWidthCell, y * this.mWidthCell,
 					x * this.mWidthCell, (y + 1) * this.mWidthCell, pY);
 		}
-
+		// Крайние линии справа
 		for (int x = GameMap.INDEX_WIDTH_MIN; x < GameMap.INDEX_WIDTH_MAX; x++) {
 			int y = GameMap.CELLS_ROW_COUNT - 1;
-			Cell cellA = this.mGameMap.getCell(x, y);
-			Cell cellB = this.mGameMap.getCell(x + 1, y);
+			Cell cellA = this.mGameMap.getCell(new Cell(x, y));
+			Cell cellB = this.mGameMap.getCell(new Cell(x + 1, y));
 
 			Paint pX = (this.mGameMap.isLinked(cellA, cellB))?(pLine):(pEmptyLine);
 
 			canvas.drawLine((x + 1) * this.mWidthCell, y * this.mWidthCell,
 					x * this.mWidthCell, y * this.mWidthCell, pX);
 		}
+
+		// Рисуем мячик
+		Paint pBall = new Paint();
+		pBall.setColor(Color.RED);
+
+		Cell currentCell = this.mGameMap.getCurrent();
+
+		canvas.drawCircle(currentCell.getX() * this.mWidthCell, currentCell.getY() * this.mWidthCell, 3, pBall);
 	}
 
 }
