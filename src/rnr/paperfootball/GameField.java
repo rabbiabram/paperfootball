@@ -9,7 +9,8 @@ public class GameField extends Activity {
 	private Game mGame;
 	private BaseMapBuilder mGameBuilder;
 	private GameFieldView mGameFieldView;
-    @Override
+
+	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -18,10 +19,18 @@ public class GameField extends Activity {
 
         this.mGameFieldView = new GameFieldView(this);
         this.mGameFieldView.setMapPainter(this.mGameBuilder.createMapPainter(this.mGame.getMap()));
+        this.mGame.getMap().addHandler(this.mGameFieldView);
 
         this.setContentView(this.mGameFieldView);
         this.mGameFieldView.requestFocus();
 
+        this.mGame.addPlayer(new TestPlayer());
+        this.mGame.addPlayer(new BasePlayer());
+        try {
+			this.mGame.startGame();
+		} catch (InsufficientPlayersException e) {
+			e.printStackTrace();
+		}
     }
 
     @Override
