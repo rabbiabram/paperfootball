@@ -1,11 +1,15 @@
-package rnr.paperfootball;
+package com.rnr.paperfootball;
 
 import java.util.Vector;
+
+import com.rnr.paperfootball.base.BaseMap;
+import com.rnr.paperfootball.base.BasePlayer;
+import com.rnr.paperfootball.core.Cell;
 
 public class TestPlayer extends BasePlayer {
 
 	@Override
-	public Vector<Cell> Turn(BaseGameMap gameMap) {
+	public Vector<Cell> Turn(BaseMap gameMap) {
 		Vector<Cell> path = new Vector<Cell>();
 		Cell start = gameMap.getCurrent();
 
