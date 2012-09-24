@@ -58,7 +58,7 @@ public class Game extends Thread {
 		this.isStart = true;
 		this.mTurnCount = 0;
 
-		if (this.mPlayers.size() < Game.MIN_PLAYERS_COUNT) {
+		if (this.mPlayers.size() < this.mGameMap.getMinPlayersCount()) {
 			throw new InsufficientPlayersException("Недостаточное количестов игроков");
 		}
 
@@ -73,8 +73,18 @@ public class Game extends Thread {
 
 				do {
 					path = this.mCurrentPlayer.Turn(this.mGameMap);
+
+					if (path == null) {
+
+					}
 				}
 				while (!this.mGameMap.pavePath(path));
+
+				int indexWinner = this.mGameMap.getIndexWinner();
+				if (indexWinner != -1) {
+					this.mGameMap.sendEndOfGame(indexWinner);
+					break;
+				}
 
 				int nextPlayerIndex = (this.mPlayers.indexOf(this.mCurrentPlayer) + 1) % this.mPlayers.size();
 				this.mCurrentPlayer = this.mPlayers.get(nextPlayerIndex);

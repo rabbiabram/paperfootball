@@ -14,6 +14,9 @@ import com.rnr.paperfootball.core.Cell;
 public abstract class BasePlayer {
 	private String mName;
 
+	public BasePlayer(String name) {
+		this.setName(name);
+	}
 	/**
 	 * @return the name
 	 */
@@ -28,6 +31,12 @@ public abstract class BasePlayer {
 		this.mName = name;
 	}
 
+	/**
+	 * Возвращает путь игрока. Если путь пустой, значит, игрок проиграл.
+	 * @param gameMap
+	 * @return Путь. Если возвратит null, значит, путь не найден
+	 * @throws InterruptedException
+	 */
 	public abstract Vector<Cell> Turn(BaseMap gameMap) throws InterruptedException;
 
 }

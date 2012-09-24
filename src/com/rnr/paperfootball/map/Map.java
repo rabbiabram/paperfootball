@@ -10,6 +10,7 @@ public class Map extends BaseMap {
 	Vector<Cell> mCells;
 	Vector<Link> mLinks;
 	Cell mCurrent;
+	private Vector<Cell> mGoals;
 
 	@Override
 	public Cell getCurrent() {
@@ -31,6 +32,7 @@ public class Map extends BaseMap {
 	public Map() {
 		this.mCells = new Vector<Cell>(Map.CELLS_COUNT);
 		this.mLinks = new Vector<Link>();
+		this.mGoals = new Vector<Cell>();
 
 		for (int x = Map.INDEX_WIDTH_MIN; x < Map.CELLS_COL_COUNT; x++) {
 			for (int y = Map.INDEX_HEIGHT_MIN; y < Map.CELLS_ROW_COUNT; y++) {
@@ -74,6 +76,8 @@ public class Map extends BaseMap {
 			this.mLinks.add(new Link(a3, b3));
 			this.mLinks.add(new Link(a4, b4));
 		}
+		this.mGoals.add(this.getCell(new Cell(Map.INDEX_WIDTH_MAX, Map.INDEX_HEIGHT_CENTER)));
+		this.mGoals.add(this.getCell(new Cell(Map.INDEX_WIDTH_MIN, Map.INDEX_HEIGHT_CENTER)));
 	}
 
 	// TODO: возможно, лучше параметром выделить Cell и перемести в родительский класс. искать equals
@@ -130,7 +134,7 @@ public class Map extends BaseMap {
 				}
 			}
 			// Проверяем наличие точки в пути
-			if (!this.isLinked(a)) {
+			if ((i > 1) && !this.isLinked(a)) {
 				return false;
 			}
 		}
@@ -168,4 +172,13 @@ public class Map extends BaseMap {
 		return false;
 	}
 
+	@Override
+	public int getMinPlayersCount() {
+		return this.mGoals.size();
+	}
+
+	@Override
+	public int getIndexWinner() {
+		return this.mGoals.indexOf(this.mCurrent);
+	}
 }
