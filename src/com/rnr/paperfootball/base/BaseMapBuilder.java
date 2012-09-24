@@ -9,5 +9,5 @@ package com.rnr.paperfootball.base;
  */
 public abstract class BaseMapBuilder {
 	public abstract BaseMap createMap();
-	public abstract BaseMapPainter createMapPainter(BaseMap gameMap);
+	public abstract BaseMapController createMapPainter(BaseMap gameMap);
 }

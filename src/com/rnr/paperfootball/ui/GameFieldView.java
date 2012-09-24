@@ -1,19 +1,35 @@
 package com.rnr.paperfootball.ui;
 
-import com.rnr.paperfootball.base.BaseMap;
-import com.rnr.paperfootball.base.BaseMapPainter;
-import com.rnr.paperfootball.core.GameCallback;
+import java.util.Vector;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Picture;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
+import android.view.View.OnTouchListener;
 
-public class GameFieldView extends SurfaceView implements SurfaceHolder.Callback, GameCallback {
-	private BaseMapPainter mPainter;
+import com.rnr.paperfootball.base.BaseMap;
+import com.rnr.paperfootball.base.BaseMapController;
+import com.rnr.paperfootball.core.GameCallback;
+import com.rnr.paperfootball.core.TouchHandler;
+
+public class GameFieldView extends SurfaceView implements SurfaceHolder.Callback, GameCallback,
+		OnTouchListener {
+	private BaseMapController mPainter;
 	private boolean mSurfaceCreated;
+	private Vector<TouchHandler> mTouchHandler;
+
+	public void addHandler(TouchHandler handler) {
+		this.mTouchHandler.add(handler);
+	}
+
+	public void removeHandler(TouchHandler handler) {
+		this.mTouchHandler.remove(handler);
+	}
 
 	private void paintField(SurfaceHolder surfaceHolder) {
 		if (!this.mSurfaceCreated) {
@@ -33,7 +49,9 @@ public class GameFieldView extends SurfaceView implements SurfaceHolder.Callback
 	}
 
 	protected void initView() {
+		this.setOnTouchListener(this);
 		this.mSurfaceCreated = false;
+		this.mTouchHandler = new Vector<TouchHandler>();
 		this.getHolder().addCallback(this);
 	}
 
@@ -52,7 +70,7 @@ public class GameFieldView extends SurfaceView implements SurfaceHolder.Callback
 		this.initView();
 	}
 
-	public void setMapPainter(BaseMapPainter mapPainter) {
+	public void setMapPainter(BaseMapController mapPainter) {
 		this.mPainter = mapPainter;
 	}
 
@@ -60,6 +78,7 @@ public class GameFieldView extends SurfaceView implements SurfaceHolder.Callback
 	public void surfaceChanged(SurfaceHolder surfaceHolder, int arg1, int arg2, int arg3) {
 		this.paintField(surfaceHolder);
 	}
+
 	@Override
 	public void surfaceCreated(SurfaceHolder surfaceHolder) {
 		this.mSurfaceCreated = true;
@@ -76,4 +95,11 @@ public class GameFieldView extends SurfaceView implements SurfaceHolder.Callback
 		this.paintField(this.getHolder());
 	}
 
+	@Override
+	public boolean onTouch(View v, MotionEvent event) {
+		for (TouchHandler handler : this.mTouchHandler) {
+			handler.setPoint(this.mPainter, event.getX(), event.getY());
+		}
+		return false;
+	}
 }

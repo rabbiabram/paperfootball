@@ -1,7 +1,8 @@
-
 package com.rnr.paperfootball.core;
 
 import java.util.Vector;
+
+import android.util.Log;
 
 import com.rnr.paperfootball.base.BaseMap;
 import com.rnr.paperfootball.base.BasePlayer;
@@ -66,20 +67,22 @@ public class Game extends Thread {
 		this.start();
 	}
 	public void run() {
-		while (true) {
-			Vector<Cell> path;
+		 try {
+			while (true) {
+				Vector<Cell> path;
 
-			do {
-				 path = this.mCurrentPlayer.Turn(this.mGameMap);
+				do {
+					path = this.mCurrentPlayer.Turn(this.mGameMap);
+				}
+				while (!this.mGameMap.pavePath(path));
+
+				int nextPlayerIndex = (this.mPlayers.indexOf(this.mCurrentPlayer) + 1) % this.mPlayers.size();
+				this.mCurrentPlayer = this.mPlayers.get(nextPlayerIndex);
+
+				++this.mTurnCount;
 			}
-			while (!this.mGameMap.validate(path));
-
-			this.mGameMap.pavePath(path);
-
-			int nextPlayerIndex = (this.mPlayers.indexOf(this.mCurrentPlayer) + 1) % this.mPlayers.size();
-			this.mCurrentPlayer = this.mPlayers.get(nextPlayerIndex);
-
-			++this.mTurnCount;
+		} catch (InterruptedException e) {
+			Log.v("paper.thread", "Interrupted thread");
 		}
 	}
 }

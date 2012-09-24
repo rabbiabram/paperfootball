@@ -7,11 +7,15 @@ import com.rnr.paperfootball.core.GameCallback;
 
 // TODO: Сделать дженериком,в качестве параметра Cell
 public abstract class BaseMap {
-	public abstract boolean isLinked(Cell a, Cell b);
-	public abstract boolean validate(Vector<Cell> path);
-	public abstract void pavePath(Vector<Cell> path);
+	public abstract boolean hasLink(Cell a, Cell b);
+	public abstract boolean validate(Vector<Cell> path, boolean partial);
+	public abstract boolean pavePath(Vector<Cell> path);
 	public abstract Cell getCurrent();
 	public abstract Cell getCell(Cell cell);
+
+	public boolean validate(Vector<Cell> path) {
+		return this.validate(path, false);
+	}
 
 	protected Vector<GameCallback> mHandlers;
 
@@ -25,5 +29,11 @@ public abstract class BaseMap {
 
 	public void removeHandler(GameCallback callback) {
 		this.mHandlers.remove(callback);
+	}
+
+	public void sendRepaint() {
+		for (GameCallback callback : this.mHandlers) {
+			callback.repaint(this);
+		}
 	}
 }

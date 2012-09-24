@@ -4,7 +4,6 @@ import java.util.Vector;
 
 import com.rnr.paperfootball.base.BaseMap;
 import com.rnr.paperfootball.core.Cell;
-import com.rnr.paperfootball.core.GameCallback;
 import com.rnr.paperfootball.core.Link;
 
 public class Map extends BaseMap {
@@ -89,7 +88,7 @@ public class Map extends BaseMap {
 	}
 
 	@Override
-	public boolean isLinked(Cell a, Cell b) {
+	public boolean hasLink(Cell a, Cell b) {
 		for (Link link : this.mLinks) {
 			if ((a.equals(link.getA()) && b.equals(link.getB())) ||
 					(b.equals(link.getA()) && a.equals(link.getB()))) {
@@ -100,40 +99,73 @@ public class Map extends BaseMap {
 	}
 
 	@Override
-	public boolean validate(Vector<Cell> path) {
+	public boolean validate(Vector<Cell> path, boolean partial) {
 		if (path == null) {
 			return false;
 		}
 
-		int pathSize = path.size();
+		Vector<Cell> innerPath = new Vector<Cell>();
+		innerPath.add(this.mCurrent);
+		innerPath.addAll(path);
 
-		if (pathSize < 1) {
+		int pathSize = innerPath.size();
+
+		if (pathSize < 2) {
 			return false;
 		}
-		if (this.isLinked(this.mCurrent, path.get(0))) {
-			return false;
-		}
-		for (int i = 1; i < path.size(); i++) {
-			if (this.isLinked(path.get(i - 1), path.get(i))) {
+		for (int i = 1; i < innerPath.size(); i++) {
+			Cell a = innerPath.get(i - 1);
+			Cell b = innerPath.get(i);
+			// Уже были ходы между этими точками
+			if (!this.validateLink(a, b)) {
+				return false;
+			}
+			// Проверяем наличие колец в пути
+			for (int ii = i + 1; ii < innerPath.size(); ii++) {
+				Cell aa = innerPath.get(ii);
+				Cell bb = innerPath.get(ii - 1);
+				if ((a.equals(aa) && b.equals(bb)) ||
+						(a.equals(bb) && b.equals(aa))) {
+					return false;
+				}
+			}
+			// Проверяем наличие точки в пути
+			if (!this.isLinked(a)) {
 				return false;
 			}
 		}
-		return true;
+		// Если путь полный, то последняя точка должна быть новая
+		return partial || !this.isLinked(innerPath.lastElement());
+	}
+
+	private boolean isLinked(Cell a) {
+		for (Link link : this.mLinks) {
+			if (a.equals(link.getA()) ||
+					a.equals(link.getB())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean validateLink(Cell a, Cell b) {
+		return !((a == null) || (b == null) ||
+				this.hasLink(a, b) || (Math.abs(a.getX() - b.getX()) > 1) ||
+				(Math.abs(a.getY() - b.getY()) > 1) ||
+				(a.equals(b)));
 	}
 
 	@Override
-	public void pavePath(Vector<Cell> path) {
+	public boolean pavePath(Vector<Cell> path) {
 		if (this.validate(path)) {
 			for (Cell cell : path) {
 				this.mLinks.add(new Link(this.mCurrent, cell));
 				this.mCurrent = cell;
 			}
-
-			for (GameCallback callback : this.mHandlers) {
-				callback.repaint(this);
-			}
-
+			this.sendRepaint();
+			return true;
 		}
+		return false;
 	}
 
 }

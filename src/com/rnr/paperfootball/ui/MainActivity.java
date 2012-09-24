@@ -11,7 +11,7 @@ public class MainActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.startActivity(new Intent(this, GameField.class));
+        this.startActivity(new Intent(this, GameFieldActivity.class));
 //        this.setContentView(R.layout.activity_main);
     }
 

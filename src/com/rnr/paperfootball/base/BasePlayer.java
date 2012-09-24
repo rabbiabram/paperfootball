@@ -11,7 +11,7 @@ import com.rnr.paperfootball.core.Cell;
  * @author rodnover
  *
  */
-public class BasePlayer {
+public abstract class BasePlayer {
 	private String mName;
 
 	/**
@@ -28,9 +28,6 @@ public class BasePlayer {
 		this.mName = name;
 	}
 
-	public Vector<Cell> Turn(BaseMap gameMap) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public abstract Vector<Cell> Turn(BaseMap gameMap) throws InterruptedException;
 
 }
