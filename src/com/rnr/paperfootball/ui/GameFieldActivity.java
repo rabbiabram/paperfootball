@@ -1,6 +1,7 @@
 package com.rnr.paperfootball.ui;
 
 import com.rnr.paperfootball.LocalPlayer;
+import com.rnr.paperfootball.LocalPlayerController;
 import com.rnr.paperfootball.TestPlayer;
 import com.rnr.paperfootball.base.BaseMapBuilder;
 import com.rnr.paperfootball.core.Game;
@@ -28,11 +29,15 @@ public class GameFieldActivity extends Activity {
         this.mGameFieldView.setMapPainter(this.mGameBuilder.createMapPainter(this.mGame.getMap()));
         this.mGame.getMap().addHandler(this.mGameFieldView);
 
+        LocalPlayerController playerController = new LocalPlayerController();
+
+        this.mGameFieldView.addHandler(playerController);
+
+        this.mGame.addPlayer(new LocalPlayer(playerController));
+        this.mGame.addPlayer(new LocalPlayer(playerController));
+
         this.setContentView(this.mGameFieldView);
         this.mGameFieldView.requestFocus();
-
-        this.mGame.addPlayer(new TestPlayer());
-        this.mGame.addPlayer(new LocalPlayer());
 
         try {
 			this.mGame.startGame();

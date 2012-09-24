@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<XMI verified="false" xmi.version="1.2" timestamp="2012-09-21T23:09:15" xmlns:UML="http://schema.omg.org/spec/UML/1.3">
+<XMI verified="false" xmi.version="1.2" timestamp="2012-09-22T15:24:48" xmlns:UML="http://schema.omg.org/spec/UML/1.3">
  <XMI.header>
   <XMI.documentation>
    <XMI.exporter>umbrello uml modeller http://uml.sf.net</XMI.exporter>
@@ -41,6 +41,7 @@
           <UML:Generalization xmi.idref="I8t0pEbuRSyV"/>
          </UML:GeneralizableElement.generalization>
         </UML:DataType>
+        <UML:DataType stereotype="datatype" visibility="public" isSpecification="false" namespace="Datatypes" isAbstract="false" isLeaf="false" elementReference="G0kqTywri3k3" isRoot="false" xmi.id="LTLB0I4zrIee" name="Vector&lt;TouchHandler>"/>
        </UML:Namespace.ownedElement>
       </UML:Package>
       <UML:Generalization discriminator="" visibility="public" isSpecification="false" namespace="Logical View" child="IE3KVtfdbceX" xmi.id="sjQVpWe5khQF" parent="mcr9DKCr6eC3" name=""/>
@@ -253,6 +254,7 @@
                <UML:Classifier.feature>
                 <UML:Attribute visibility="private" isSpecification="false" xmi.id="rpaimPiPzcVM" type="kI5eIvg2FFD1" name="mPainter"/>
                 <UML:Attribute visibility="private" isSpecification="false" xmi.id="clvr1xsoDzgj" type="Kz8esON7aweI" name="mSurfaceCreated"/>
+                <UML:Attribute visibility="private" isSpecification="false" xmi.id="rM8cJYqnWgfO" type="LTLB0I4zrIee" name="mHandlers"/>
                 <UML:Operation visibility="private" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="mFHsA4v1rTje" name="paintField">
                  <UML:BehavioralFeature.parameter>
                   <UML:Parameter visibility="private" isSpecification="false" xmi.id="tP1s1XCcG8TF" type="AO8oZsRGjEjR" value="" name="surfaceHolder"/>
@@ -303,6 +305,13 @@
                 <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="vmMHOLHoV3KH" name="repaint">
                  <UML:BehavioralFeature.parameter>
                   <UML:Parameter visibility="private" isSpecification="false" xmi.id="rt6P7cqONwjy" type="nTMoo5baSW7U" value="" name="map"/>
+                 </UML:BehavioralFeature.parameter>
+                </UML:Operation>
+                <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="2eXitJCJbAEq" name="onTouch">
+                 <UML:BehavioralFeature.parameter>
+                  <UML:Parameter kind="return" xmi.id="dhUxNhT82cP9" type="Kz8esON7aweI"/>
+                  <UML:Parameter visibility="private" isSpecification="false" xmi.id="B9UjqL02ebCr" type="38y0x3L4S07s" value="" name="v"/>
+                  <UML:Parameter visibility="private" isSpecification="false" xmi.id="RgStfZjqgEXW" type="PRSmKKUNSQLP" value="" name="event"/>
                  </UML:BehavioralFeature.parameter>
                 </UML:Operation>
                </UML:Classifier.feature>
@@ -544,18 +553,62 @@
         </UML:Package>
        </UML:Namespace.ownedElement>
       </UML:Package>
+      <UML:Class visibility="public" isSpecification="false" namespace="Logical View" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="38y0x3L4S07s" name="View"/>
+      <UML:Class visibility="public" isSpecification="false" namespace="Logical View" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="PRSmKKUNSQLP" name="MotionEvent"/>
+      <UML:Package visibility="public" isSpecification="false" namespace="Logical View" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="h3T8VEQnimD6" name="new_package">
+       <UML:Namespace.ownedElement/>
+      </UML:Package>
+      <UML:Interface stereotype="interface" visibility="public" isSpecification="false" namespace="Logical View" isAbstract="true" isLeaf="false" isRoot="false" xmi.id="dUtLTznAxS9w" name="TouchHandler">
+       <UML:Classifier.feature>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="SwhS5k2tGa4T" name="setCell">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="ETysuuXMzHMq" type="MiG15cl4TNNl" value="" name="cell"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+       </UML:Classifier.feature>
+      </UML:Interface>
+      <UML:Class visibility="public" isSpecification="false" namespace="Logical View" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="MiG15cl4TNNl" name="Cell"/>
+      <UML:Dependency visibility="public" isSpecification="false" namespace="Logical View" supplier="dUtLTznAxS9w" xmi.id="M2T9tpHT7nIs" client="9Uej0W8Eorka" name=""/>
+      <UML:Association visibility="public" isSpecification="false" namespace="Logical View" xmi.id="o8sNG8sDe0ng" name="">
+       <UML:Association.connection>
+        <UML:AssociationEnd changeability="changeable" visibility="public" isNavigable="true" isSpecification="false" multiplicity="1" xmi.id="VP97sRynpbx4" type="9Uej0W8Eorka" name="" aggregation="none"/>
+        <UML:AssociationEnd changeability="changeable" visibility="public" isNavigable="true" isSpecification="false" multiplicity="*" xmi.id="X4rAH7p5FgRT" type="dUtLTznAxS9w" name="" aggregation="none"/>
+       </UML:Association.connection>
+      </UML:Association>
      </UML:Namespace.ownedElement>
      <XMI.extension xmi.extender="umbrello">
       <diagrams>
-       <diagram showopsig="1" linecolor="#ff0000" snapx="10" showattribassocs="1" snapy="10" linewidth="0" showattsig="1" isopen="1" showpackage="1" showpubliconly="1" showstereotype="1" name="Диаграмма классов" font="Ubuntu Mono,11,-1,5,50,0,0,0,0,0" canvasheight="1136" canvaswidth="1028" localid="-1" snapcsgrid="0" showgrid="0" showops="1" griddotcolor="#000000" backgroundcolor="#ffffff" usefillcolor="1" fillcolor="#ffff00" zoom="75" xmi.id="W5Bb8MMkDkR9" documentation="" showscope="1" snapgrid="0" showatts="1" type="1">
-        <widgets/>
+       <diagram showopsig="1" linecolor="#ff0000" snapx="10" showattribassocs="1" snapy="10" linewidth="0" showattsig="1" isopen="1" showpackage="1" showpubliconly="1" showstereotype="1" name="Local player get paht" font="Ubuntu Mono,11,-1,5,50,0,0,0,0,0" canvasheight="1136" canvaswidth="1171" localid="-1" snapcsgrid="0" showgrid="0" showops="1" griddotcolor="#000000" backgroundcolor="#ffffff" usefillcolor="1" fillcolor="#ffff00" zoom="75" xmi.id="W5Bb8MMkDkR9" documentation="" showscope="1" snapgrid="0" showatts="1" type="1">
+        <widgets>
+         <classwidget linecolor="#ff0000" usesdiagramfillcolor="0" linewidth="none" showoperations="1" usesdiagramusefillcolor="0" showpubliconly="1" showpackage="1" x="45" showattsigs="601" showstereotype="1" y="30" showattributes="1" font="Ubuntu Mono,11,-1,5,75,0,0,0,0,0" width="619" isinstance="0" usefillcolor="1" fillcolor="#ffff00" xmi.id="9Uej0W8Eorka" showscope="1" height="157" showopsigs="601"/>
+         <floatingtext linecolor="none" usesdiagramfillcolor="1" linewidth="none" usesdiagramusefillcolor="1" x="447" showstereotype="1" y="404" text="" font="Ubuntu Mono,11,-1,5,50,0,0,0,0,0" pretext="" role="700" width="8" isinstance="0" posttext="" usefillcolor="1" fillcolor="none" xmi.id="lrEH3Jy6m5Zy" height="19"/>
+         <notewidget width="201" showstereotype="1" x="354" noteType="0" usesdiagramusefillcolor="1" y="386" usesdiagramfillcolor="1" isinstance="0" fillcolor="none" height="101" linecolor="none" xmi.id="Wkojy8Sjxhz1" usefillcolor="1" linewidth="none" font="Ubuntu Mono,11,-1,5,50,0,0,0,0,0" text="OnTouch - преобразует касания в координаты точек и передает их обработчику"/>
+         <interfacewidget linecolor="none" usesdiagramfillcolor="1" linewidth="none" showoperations="1" usesdiagramusefillcolor="1" showpubliconly="1" showpackage="1" x="737" showstereotype="1" y="47" font="Ubuntu Mono,11,-1,5,75,1,0,0,0,0" drawascircle="0" width="172" isinstance="0" usefillcolor="1" fillcolor="none" xmi.id="dUtLTznAxS9w" showscope="1" height="52" showopsigs="601"/>
+         <notewidget width="168" showstereotype="1" x="908" noteType="0" usesdiagramusefillcolor="1" y="174" usesdiagramfillcolor="1" isinstance="0" fillcolor="none" height="85" linecolor="none" xmi.id="xu0ZEhnFkPzm" usefillcolor="1" linewidth="none" font="Ubuntu Mono,11,-1,5,50,0,0,0,0,0" text="Обрабатывает точку, которая была передана из GameFieldView"/>
+        </widgets>
         <messages/>
-        <associations/>
-       </diagram>
-       <diagram showopsig="1" linecolor="#ff0000" snapx="10" showattribassocs="1" snapy="10" linewidth="0" showattsig="1" isopen="0" showpackage="1" showpubliconly="1" showstereotype="1" name="collaboration diagram" font="Ubuntu Mono,11,-1,5,50,0,0,0,0,0" canvasheight="28" canvaswidth="98" localid="LMVnzngogtJ7" snapcsgrid="0" showgrid="0" showops="1" griddotcolor="#000000" backgroundcolor="#ffffff" usefillcolor="1" fillcolor="#ffff00" zoom="100" xmi.id="L2INAxHj6ZvG" documentation="" showscope="1" snapgrid="0" showatts="1" type="4">
-        <widgets/>
-        <messages/>
-        <associations/>
+        <associations>
+         <assocwidget indexa="1" roleBdoc="" linecolor="none" usesdiagramfillcolor="0" widgetbid="Wkojy8Sjxhz1" indexb="1" linewidth="none" usesdiagramusefillcolor="0" totalcounta="2" totalcountb="2" widgetaid="9Uej0W8Eorka" roleAdoc="" visibilityA="0" visibilityB="0" usefillcolor="0" fillcolor="#000000" changeabilityA="900" changeabilityB="900" documentation="" type="513">
+          <linepath>
+           <startpoint startx="432" starty="187"/>
+           <endpoint endx="432" endy="386"/>
+          </linepath>
+         </assocwidget>
+         <assocwidget indexa="1" roleBdoc="" linecolor="none" usesdiagramfillcolor="0" widgetbid="xu0ZEhnFkPzm" indexb="1" linewidth="none" usesdiagramusefillcolor="0" totalcounta="2" totalcountb="2" widgetaid="dUtLTznAxS9w" roleAdoc="" visibilityA="0" visibilityB="0" usefillcolor="81" fillcolor="#000000" changeabilityA="900" changeabilityB="900" documentation="" type="513">
+          <linepath>
+           <startpoint startx="909" starty="99"/>
+           <endpoint endx="909" endy="174"/>
+          </linepath>
+         </assocwidget>
+         <assocwidget indexa="1" indexb="1" usesdiagramusefillcolor="0" widgetaid="9Uej0W8Eorka" usesdiagramfillcolor="0" fillcolor="#000000" linecolor="none" totalcounta="2" xmi.id="o8sNG8sDe0ng" widgetbid="dUtLTznAxS9w" totalcountb="2" type="503" usefillcolor="0" linewidth="none">
+          <linepath>
+           <startpoint startx="664" starty="72"/>
+           <endpoint endx="737" endy="72"/>
+          </linepath>
+          <floatingtext linecolor="none" usesdiagramfillcolor="1" linewidth="none" usesdiagramusefillcolor="1" x="666" showstereotype="1" y="51" text="1" font="Ubuntu Mono,11,-1,5,50,0,0,0,0,0" pretext="" role="701" width="15" isinstance="0" posttext="" usefillcolor="1" fillcolor="none" xmi.id="RL4hSrmgXB7H" height="19"/>
+          <floatingtext linecolor="none" usesdiagramfillcolor="1" linewidth="none" usesdiagramusefillcolor="1" x="720" showstereotype="1" y="51" text="*" font="Ubuntu Mono,11,-1,5,50,0,0,0,0,0" pretext="" role="702" width="15" isinstance="0" posttext="" usefillcolor="1" fillcolor="none" xmi.id="27uQWMKvhOc8" height="19"/>
+         </assocwidget>
+        </associations>
        </diagram>
        <diagram showopsig="1" linecolor="#ff0000" snapx="10" showattribassocs="1" snapy="10" linewidth="0" showattsig="1" isopen="0" showpackage="1" showpubliconly="1" showstereotype="1" name="activity diagram" font="Ubuntu Mono,11,-1,5,50,0,0,0,0,0" canvasheight="28" canvaswidth="98" localid="-1" snapcsgrid="0" showgrid="0" showops="1" griddotcolor="#000000" backgroundcolor="#ffffff" usefillcolor="1" fillcolor="#ffff00" zoom="100" xmi.id="9XkJoJBAQwls" documentation="" showscope="1" snapgrid="0" showatts="1" type="6">
         <widgets/>
@@ -633,7 +686,7 @@
   </UML:Model>
  </XMI.content>
  <XMI.extensions xmi.extender="umbrello">
-  <docsettings viewid="KwUN6GOoMNXS" uniqueid="diA4AH2kZ9EU" documentation=""/>
+  <docsettings viewid="W5Bb8MMkDkR9" uniqueid="27uQWMKvhOc8" documentation=""/>
   <listview>
    <listitem open="1" type="800" id="Views">
     <listitem open="1" type="821" id="Component View"/>
@@ -646,7 +699,7 @@
      <listitem open="0" type="813" id="AB8Y5pU08vfi"/>
      <listitem open="0" type="813" id="nn38jUDpBUap"/>
      <listitem open="0" type="813" id="Xss0Yd9ItCuA"/>
-     <listitem open="0" type="806" id="L2INAxHj6ZvG" label="collaboration diagram"/>
+     <listitem open="1" type="813" id="MiG15cl4TNNl"/>
      <listitem open="1" type="818" id="HCzNFdCg6JRg">
       <listitem open="1" type="818" id="QPWjaDAs2JsM">
        <listitem open="1" type="818" id="8ix1xA0KPbV5">
@@ -763,13 +816,15 @@
           <listitem open="0" type="815" id="iYET1RBeOgXD"/>
           <listitem open="0" type="815" id="kXxgVmFDISfH"/>
          </listitem>
-         <listitem open="0" type="813" id="9Uej0W8Eorka">
+         <listitem open="1" type="813" id="9Uej0W8Eorka">
           <listitem open="0" type="815" id="JBxYO1cSbm7m"/>
           <listitem open="0" type="815" id="P05bm6n4Jbae"/>
           <listitem open="0" type="815" id="Hp79JplCCm2E"/>
           <listitem open="0" type="815" id="5J3HIiy4vFu6"/>
+          <listitem open="0" type="814" id="rM8cJYqnWgfO"/>
           <listitem open="0" type="814" id="rpaimPiPzcVM"/>
           <listitem open="0" type="814" id="clvr1xsoDzgj"/>
+          <listitem open="0" type="815" id="2eXitJCJbAEq"/>
           <listitem open="0" type="815" id="mFHsA4v1rTje"/>
           <listitem open="0" type="815" id="vmMHOLHoV3KH"/>
           <listitem open="0" type="815" id="70FSuKJZ3YLR"/>
@@ -786,7 +841,7 @@
       </listitem>
      </listitem>
      <listitem open="0" type="813" id="HFqYLJnOcpfs"/>
-     <listitem open="0" type="830" id="Datatypes">
+     <listitem open="1" type="830" id="Datatypes">
       <listitem open="1" type="829" id="WVxTYLRkM9Xc"/>
       <listitem open="1" type="829" id="Kz8esON7aweI"/>
       <listitem open="1" type="829" id="NcgD6WyzJdtI"/>
@@ -806,19 +861,27 @@
       <listitem open="0" type="829" id="9HkcdBE61upM"/>
       <listitem open="0" type="829" id="mANnOZIxYv9X"/>
       <listitem open="0" type="829" id="LruvVi7ZJ5td"/>
+      <listitem open="1" type="829" id="LTLB0I4zrIee"/>
      </listitem>
      <listitem open="0" type="813" id="163GG6EqiqRO"/>
+     <listitem open="0" type="807" id="W5Bb8MMkDkR9" label="Local player get paht"/>
      <listitem open="0" type="813" id="rNlzJOim7wWG"/>
+     <listitem open="1" type="813" id="PRSmKKUNSQLP"/>
      <listitem open="1" type="813" id="RTypuWUBZ32W"/>
+     <listitem open="1" type="818" id="h3T8VEQnimD6"/>
      <listitem open="0" type="813" id="Fe8RMI8IRTCq"/>
      <listitem open="0" type="810" id="KwUN6GOoMNXS" label="sequence"/>
      <listitem open="0" type="818" id="AO8oZsRGjEjR">
       <listitem open="0" type="813" id="nn38jUDpBUap"/>
+      <listitem open="0" type="813" id="nn38jUDpBUap"/>
      </listitem>
      <listitem open="0" type="813" id="wotpjBIGezeH"/>
      <listitem open="0" type="813" id="mcr9DKCr6eC3"/>
+     <listitem open="1" type="817" id="dUtLTznAxS9w">
+      <listitem open="0" type="815" id="SwhS5k2tGa4T"/>
+     </listitem>
      <listitem open="0" type="813" id="G0kqTywri3k3"/>
-     <listitem open="0" type="807" id="W5Bb8MMkDkR9" label="Диаграмма классов"/>
+     <listitem open="1" type="813" id="38y0x3L4S07s"/>
     </listitem>
     <listitem open="1" type="802" id="Use Case View"/>
    </listitem>
@@ -1143,9 +1206,9 @@
      </header>
      <classfields/>
     </classifiercodedocument>
-    <classifiercodedocument package="Logical View" fileExt=".java" parent_class="nn38jUDpBUap" id="nn38jUDpBUap" fileName="Callback" writeOutCode="true">
+    <classifiercodedocument package="AO8oZsRGjEjR" fileExt=".java" parent_class="nn38jUDpBUap" id="nn38jUDpBUap" fileName="Callback" writeOutCode="true">
      <textblocks>
-      <codeblockwithcomments tag="packages" text="package Logical View;&amp;#010;">
+      <codeblockwithcomments tag="packages" text="package SurfaceHolder;&amp;#010;">
        <header>
         <codecomment tag="" writeOutText="false"/>
        </header>
@@ -2836,7 +2899,7 @@
         <codecomment tag="" writeOutText="false"/>
        </header>
       </codeblockwithcomments>
-      <codeblockwithcomments tag="imports" text="&amp;#010;import Activity;&amp;#010;import com.rnr.paperfootball.core.Game;&amp;#010;import com.rnr.paperfootball.base.BaseMapBuilder;">
+      <codeblockwithcomments tag="imports" text="&amp;#010;import Activity;&amp;#010;import Bundle;&amp;#010;import Menu;&amp;#010;import com.rnr.paperfootball.core.Game;&amp;#010;import com.rnr.paperfootball.base.BaseMapBuilder;">
        <header>
         <codecomment tag="" writeOutText="false"/>
        </header>
@@ -3030,7 +3093,7 @@
         <codecomment tag="" writeOutText="false"/>
        </header>
       </codeblockwithcomments>
-      <codeblockwithcomments tag="imports" text="&amp;#010;import SurfaceView;&amp;#010;import Callback;&amp;#010;import com.rnr.paperfootball.core.GameCallback;&amp;#010;import SurfaceHolder;&amp;#010;import Context;&amp;#010;import AttributeSet;&amp;#010;import com.rnr.paperfootball.base.BaseMapPainter;&amp;#010;import com.rnr.paperfootball.base.BaseMap;">
+      <codeblockwithcomments tag="imports" text="&amp;#010;import SurfaceView;&amp;#010;import SurfaceHolder.Callback;&amp;#010;import com.rnr.paperfootball.core.GameCallback;&amp;#010;import TouchHandler;&amp;#010;import SurfaceHolder;&amp;#010;import Context;&amp;#010;import AttributeSet;&amp;#010;import com.rnr.paperfootball.base.BaseMapPainter;&amp;#010;import com.rnr.paperfootball.base.BaseMap;&amp;#010;import View;&amp;#010;import MotionEvent;">
        <header>
         <codecomment tag="" writeOutText="false"/>
        </header>
@@ -3053,6 +3116,16 @@
           <ccfdeclarationcodeblock tag="_0" parent_id="clvr1xsoDzgj" indentLevel="1" text="private boolean mSurfaceCreated;" canDelete="false">
            <header>
             <codecomment tag="" indentLevel="1"/>
+           </header>
+          </ccfdeclarationcodeblock>
+          <ccfdeclarationcodeblock tag="_1" parent_id="rM8cJYqnWgfO" indentLevel="1" text="private Vector_TouchHandler_ mHandlers;" canDelete="false">
+           <header>
+            <codecomment tag="" indentLevel="1"/>
+           </header>
+          </ccfdeclarationcodeblock>
+          <ccfdeclarationcodeblock role_id="0" tag="_6" parent_id="o8sNG8sDe0ng" writeOutText="false" indentLevel="1" text="public List Vector =  new Vector( );" canDelete="false">
+           <header>
+            <codecomment tag="" writeOutText="false" indentLevel="1"/>
            </header>
           </ccfdeclarationcodeblock>
          </textblocks>
@@ -3119,13 +3192,49 @@
                 <javacodedocumentation tag="" indentLevel="1" text="Set the value of mSurfaceCreated&amp;#010;&amp;#010;"/>
                </header>
               </codeaccessormethod>
+              <codeaccessormethod tag="hblock_tag_4" accessType="0" parent_id="rM8cJYqnWgfO" indentLevel="1" classfield_id="rM8cJYqnWgfO" text="return mHandlers;" canDelete="false">
+               <header>
+                <javacodedocumentation tag="" indentLevel="1" text="Get the value of mHandlers&amp;#010;&amp;#010;@return the value of mHandlers"/>
+               </header>
+              </codeaccessormethod>
+              <codeaccessormethod tag="hblock_tag_5" accessType="1" parent_id="rM8cJYqnWgfO" indentLevel="1" classfield_id="rM8cJYqnWgfO" text="mHandlers = value;" canDelete="false">
+               <header>
+                <javacodedocumentation tag="" indentLevel="1" text="Set the value of mHandlers&amp;#010;&amp;#010;"/>
+               </header>
+              </codeaccessormethod>
              </textblocks>
             </hierarchicalcodeblock>
             <hierarchicalcodeblock tag="regularAccessorMethods" indentLevel="1" canDelete="false">
              <header>
               <codecomment tag="" writeOutText="false" indentLevel="1"/>
              </header>
-             <textblocks/>
+             <textblocks>
+              <codeaccessormethod role_id="0" tag="hblock_tag_7" accessType="0" parent_id="o8sNG8sDe0ng" writeOutText="false" indentLevel="1" classfield_id="o8sNG8sDe0ng" text="return Vector;" canDelete="false">
+               <header>
+                <javacodedocumentation tag="" indentLevel="1" text="Get the value of Vector&amp;#010;&amp;#010;@return the value of Vector"/>
+               </header>
+              </codeaccessormethod>
+              <codeaccessormethod role_id="0" tag="hblock_tag_8" accessType="1" parent_id="o8sNG8sDe0ng" writeOutText="false" indentLevel="1" classfield_id="o8sNG8sDe0ng" text="Vector = value;" canDelete="false">
+               <header>
+                <javacodedocumentation tag="" indentLevel="1" text="Set the value of Vector&amp;#010;&amp;#010;"/>
+               </header>
+              </codeaccessormethod>
+              <codeaccessormethod role_id="0" tag="hblock_tag_9" accessType="2" parent_id="o8sNG8sDe0ng" writeOutText="false" indentLevel="1" classfield_id="o8sNG8sDe0ng" text="Vector.add(value);" canDelete="false">
+               <header>
+                <javacodedocumentation tag="" indentLevel="1" text="Add an object of type TouchHandler to the List Vector&amp;#010;&amp;#010;@return void"/>
+               </header>
+              </codeaccessormethod>
+              <codeaccessormethod role_id="0" tag="hblock_tag_10" accessType="3" parent_id="o8sNG8sDe0ng" writeOutText="false" indentLevel="1" classfield_id="o8sNG8sDe0ng" text="Vector.remove(value);" canDelete="false">
+               <header>
+                <javacodedocumentation tag="" indentLevel="1" text="Remove an object of type TouchHandler from the List Vector&amp;#010;"/>
+               </header>
+              </codeaccessormethod>
+              <codeaccessormethod role_id="0" tag="hblock_tag_11" accessType="4" parent_id="o8sNG8sDe0ng" writeOutText="false" indentLevel="1" classfield_id="o8sNG8sDe0ng" text="return (List) Vector;" canDelete="false">
+               <header>
+                <javacodedocumentation tag="" indentLevel="1" text="Get the list of Vector&amp;#010;&amp;#010;@return List of Vector"/>
+               </header>
+              </codeaccessormethod>
+             </textblocks>
             </hierarchicalcodeblock>
            </textblocks>
           </hierarchicalcodeblock>
@@ -3167,6 +3276,11 @@
             <codeoperation tag="operation_vmMHOLHoV3KH" parent_id="vmMHOLHoV3KH" indentLevel="1" canDelete="false">
              <header>
               <javacodedocumentation tag="" indentLevel="1" text="&amp;#010;@param map &amp;#010;@return void  "/>
+             </header>
+            </codeoperation>
+            <codeoperation tag="operation_2eXitJCJbAEq" parent_id="2eXitJCJbAEq" indentLevel="1" canDelete="false">
+             <header>
+              <javacodedocumentation tag="" indentLevel="1" text="&amp;#010;@param v &amp;#010;@param event &amp;#010;@return boolean  "/>
              </header>
             </codeoperation>
            </textblocks>
@@ -3217,6 +3331,96 @@
        <codeaccessormethod tag="hblock_tag_3" accessType="1" parent_id="clvr1xsoDzgj" indentLevel="1" classfield_id="clvr1xsoDzgj" text="mSurfaceCreated = value;" canDelete="false">
         <header>
          <javacodedocumentation tag="" indentLevel="1" text="Set the value of mSurfaceCreated&amp;#010;&amp;#010;"/>
+        </header>
+       </codeaccessormethod>
+      </codeclassfield>
+      <codeclassfield role_id="1" listClassName="" field_type="4390986" parent_id="M2T9tpHT7nIs" writeOutMethods="true" initialValue="">
+       <header>
+        <codecomment tag=""/>
+       </header>
+       <ccfdeclarationcodeblock role_id="0" tag="" parent_id="M2T9tpHT7nIs" writeOutText="false" indentLevel="1" text="public TouchHandler ;" canDelete="false">
+        <header>
+         <codecomment tag="" writeOutText="false" indentLevel="1"/>
+        </header>
+       </ccfdeclarationcodeblock>
+       <codeaccessormethod role_id="0" tag="" accessType="0" parent_id="M2T9tpHT7nIs" writeOutText="false" indentLevel="1" classfield_id="M2T9tpHT7nIs" text="return ;" canDelete="false">
+        <header>
+         <javacodedocumentation tag="" indentLevel="1" text="Get the value of &amp;#010;&amp;#010;@return the value of "/>
+        </header>
+       </codeaccessormethod>
+       <codeaccessormethod role_id="0" tag="" accessType="1" parent_id="M2T9tpHT7nIs" writeOutText="false" indentLevel="1" classfield_id="M2T9tpHT7nIs" text=" = value;" canDelete="false">
+        <header>
+         <javacodedocumentation tag="" indentLevel="1" text="Set the value of &amp;#010;&amp;#010;"/>
+        </header>
+       </codeaccessormethod>
+       <codeaccessormethod role_id="0" tag="" accessType="2" parent_id="M2T9tpHT7nIs" writeOutText="false" indentLevel="1" classfield_id="M2T9tpHT7nIs" text=".add(value);" canDelete="false">
+        <header>
+         <javacodedocumentation tag="" indentLevel="1" text="Add an object of type TouchHandler to the List &amp;#010;&amp;#010;@return void"/>
+        </header>
+       </codeaccessormethod>
+       <codeaccessormethod role_id="0" tag="" accessType="3" parent_id="M2T9tpHT7nIs" writeOutText="false" indentLevel="1" classfield_id="M2T9tpHT7nIs" text=".remove(value);" canDelete="false">
+        <header>
+         <javacodedocumentation tag="" indentLevel="1" text="Remove an object of type TouchHandler from the List &amp;#010;"/>
+        </header>
+       </codeaccessormethod>
+       <codeaccessormethod role_id="0" tag="" accessType="4" parent_id="M2T9tpHT7nIs" writeOutText="false" indentLevel="1" classfield_id="M2T9tpHT7nIs" text="return (List) ;" canDelete="false">
+        <header>
+         <javacodedocumentation tag="" indentLevel="1" text="Get the list of &amp;#010;&amp;#010;@return List of "/>
+        </header>
+       </codeaccessormethod>
+      </codeclassfield>
+      <codeclassfield role_id="-1" listClassName="" field_type="0" parent_id="rM8cJYqnWgfO" writeOutMethods="true" initialValue="">
+       <header>
+        <codecomment tag=""/>
+       </header>
+       <ccfdeclarationcodeblock tag="_1" parent_id="rM8cJYqnWgfO" indentLevel="1" text="private Vector_TouchHandler_ mHandlers;" canDelete="false">
+        <header>
+         <codecomment tag="" indentLevel="1"/>
+        </header>
+       </ccfdeclarationcodeblock>
+       <codeaccessormethod tag="hblock_tag_4" accessType="0" parent_id="rM8cJYqnWgfO" indentLevel="1" classfield_id="rM8cJYqnWgfO" text="return mHandlers;" canDelete="false">
+        <header>
+         <javacodedocumentation tag="" indentLevel="1" text="Get the value of mHandlers&amp;#010;&amp;#010;@return the value of mHandlers"/>
+        </header>
+       </codeaccessormethod>
+       <codeaccessormethod tag="hblock_tag_5" accessType="1" parent_id="rM8cJYqnWgfO" indentLevel="1" classfield_id="rM8cJYqnWgfO" text="mHandlers = value;" canDelete="false">
+        <header>
+         <javacodedocumentation tag="" indentLevel="1" text="Set the value of mHandlers&amp;#010;&amp;#010;"/>
+        </header>
+       </codeaccessormethod>
+      </codeclassfield>
+      <codeclassfield role_id="1" listClassName="" field_type="1" parent_id="o8sNG8sDe0ng" writeOutMethods="true" initialValue=" new Vector( )">
+       <header>
+        <codecomment tag=""/>
+       </header>
+       <ccfdeclarationcodeblock role_id="0" tag="_6" parent_id="o8sNG8sDe0ng" writeOutText="false" indentLevel="1" text="public List Vector =  new Vector( );" canDelete="false">
+        <header>
+         <codecomment tag="" writeOutText="false" indentLevel="1"/>
+        </header>
+       </ccfdeclarationcodeblock>
+       <codeaccessormethod role_id="0" tag="hblock_tag_7" accessType="0" parent_id="o8sNG8sDe0ng" writeOutText="false" indentLevel="1" classfield_id="o8sNG8sDe0ng" text="return Vector;" canDelete="false">
+        <header>
+         <javacodedocumentation tag="" indentLevel="1" text="Get the value of Vector&amp;#010;&amp;#010;@return the value of Vector"/>
+        </header>
+       </codeaccessormethod>
+       <codeaccessormethod role_id="0" tag="hblock_tag_8" accessType="1" parent_id="o8sNG8sDe0ng" writeOutText="false" indentLevel="1" classfield_id="o8sNG8sDe0ng" text="Vector = value;" canDelete="false">
+        <header>
+         <javacodedocumentation tag="" indentLevel="1" text="Set the value of Vector&amp;#010;&amp;#010;"/>
+        </header>
+       </codeaccessormethod>
+       <codeaccessormethod role_id="0" tag="hblock_tag_9" accessType="2" parent_id="o8sNG8sDe0ng" writeOutText="false" indentLevel="1" classfield_id="o8sNG8sDe0ng" text="Vector.add(value);" canDelete="false">
+        <header>
+         <javacodedocumentation tag="" indentLevel="1" text="Add an object of type TouchHandler to the List Vector&amp;#010;&amp;#010;@return void"/>
+        </header>
+       </codeaccessormethod>
+       <codeaccessormethod role_id="0" tag="hblock_tag_10" accessType="3" parent_id="o8sNG8sDe0ng" writeOutText="false" indentLevel="1" classfield_id="o8sNG8sDe0ng" text="Vector.remove(value);" canDelete="false">
+        <header>
+         <javacodedocumentation tag="" indentLevel="1" text="Remove an object of type TouchHandler from the List Vector&amp;#010;"/>
+        </header>
+       </codeaccessormethod>
+       <codeaccessormethod role_id="0" tag="hblock_tag_11" accessType="4" parent_id="o8sNG8sDe0ng" writeOutText="false" indentLevel="1" classfield_id="o8sNG8sDe0ng" text="return (List) Vector;" canDelete="false">
+        <header>
+         <javacodedocumentation tag="" indentLevel="1" text="Get the list of Vector&amp;#010;&amp;#010;@return List of Vector"/>
         </header>
        </codeaccessormethod>
       </codeclassfield>
@@ -4532,6 +4736,490 @@
              </header>
             </codeoperation>
            </textblocks>
+          </hierarchicalcodeblock>
+         </textblocks>
+        </hierarchicalcodeblock>
+       </textblocks>
+      </javaclassdeclarationblock>
+     </textblocks>
+     <header>
+      <codecomment tag=""/>
+     </header>
+     <classfields/>
+    </classifiercodedocument>
+    <classifiercodedocument package="Logical View" fileExt=".java" parent_class="38y0x3L4S07s" id="38y0x3L4S07s" fileName="View" writeOutCode="true">
+     <textblocks>
+      <codeblockwithcomments tag="packages" text="package Logical View;&amp;#010;">
+       <header>
+        <codecomment tag="" writeOutText="false"/>
+       </header>
+      </codeblockwithcomments>
+      <codeblockwithcomments tag="imports" writeOutText="false">
+       <header>
+        <codecomment tag="" writeOutText="false"/>
+       </header>
+      </codeblockwithcomments>
+      <javaclassdeclarationblock tag="ClassDeclBlock" parent_id="38y0x3L4S07s" canDelete="false">
+       <header>
+        <javacodedocumentation tag="" text="Class View&amp;#010;"/>
+       </header>
+       <textblocks>
+        <hierarchicalcodeblock tag="fieldsDecl" indentLevel="1" canDelete="false">
+         <header>
+          <codecomment tag="" indentLevel="1" text="Fields"/>
+         </header>
+         <textblocks/>
+        </hierarchicalcodeblock>
+        <hierarchicalcodeblock tag="methodsBlock" indentLevel="1" canDelete="false">
+         <header>
+          <codecomment tag="" indentLevel="1" text="Methods"/>
+         </header>
+         <textblocks>
+          <hierarchicalcodeblock tag="constructorMethods" indentLevel="1" canDelete="false">
+           <header>
+            <codecomment tag="" indentLevel="1" text="Constructors"/>
+           </header>
+           <textblocks>
+            <codeblockwithcomments tag="emptyconstructor" indentLevel="1" text="public View ( ) { }">
+             <header>
+              <codecomment tag="" indentLevel="1" text="Empty Constructor"/>
+             </header>
+            </codeblockwithcomments>
+           </textblocks>
+          </hierarchicalcodeblock>
+          <hierarchicalcodeblock tag="accessorMethods" indentLevel="1" canDelete="false">
+           <header>
+            <codecomment tag="" indentLevel="1" text="Accessor Methods"/>
+           </header>
+           <textblocks>
+            <hierarchicalcodeblock tag="staticAccessorMethods" indentLevel="1" canDelete="false">
+             <header>
+              <codecomment tag="" writeOutText="false" indentLevel="1"/>
+             </header>
+             <textblocks/>
+            </hierarchicalcodeblock>
+            <hierarchicalcodeblock tag="regularAccessorMethods" indentLevel="1" canDelete="false">
+             <header>
+              <codecomment tag="" writeOutText="false" indentLevel="1"/>
+             </header>
+             <textblocks/>
+            </hierarchicalcodeblock>
+           </textblocks>
+          </hierarchicalcodeblock>
+          <hierarchicalcodeblock tag="operationMethods" indentLevel="1" canDelete="false">
+           <header>
+            <codecomment tag="" indentLevel="1" text="Operations"/>
+           </header>
+           <textblocks/>
+          </hierarchicalcodeblock>
+         </textblocks>
+        </hierarchicalcodeblock>
+       </textblocks>
+      </javaclassdeclarationblock>
+     </textblocks>
+     <header>
+      <codecomment tag=""/>
+     </header>
+     <classfields/>
+    </classifiercodedocument>
+    <classifiercodedocument package="Logical View" fileExt=".java" parent_class="PRSmKKUNSQLP" id="PRSmKKUNSQLP" fileName="MotionEvent" writeOutCode="true">
+     <textblocks>
+      <codeblockwithcomments tag="packages" text="package Logical View;&amp;#010;">
+       <header>
+        <codecomment tag="" writeOutText="false"/>
+       </header>
+      </codeblockwithcomments>
+      <codeblockwithcomments tag="imports" writeOutText="false">
+       <header>
+        <codecomment tag="" writeOutText="false"/>
+       </header>
+      </codeblockwithcomments>
+      <javaclassdeclarationblock tag="ClassDeclBlock" parent_id="PRSmKKUNSQLP" canDelete="false">
+       <header>
+        <javacodedocumentation tag="" text="Class MotionEvent&amp;#010;"/>
+       </header>
+       <textblocks>
+        <hierarchicalcodeblock tag="fieldsDecl" indentLevel="1" canDelete="false">
+         <header>
+          <codecomment tag="" indentLevel="1" text="Fields"/>
+         </header>
+         <textblocks/>
+        </hierarchicalcodeblock>
+        <hierarchicalcodeblock tag="methodsBlock" indentLevel="1" canDelete="false">
+         <header>
+          <codecomment tag="" indentLevel="1" text="Methods"/>
+         </header>
+         <textblocks>
+          <hierarchicalcodeblock tag="constructorMethods" indentLevel="1" canDelete="false">
+           <header>
+            <codecomment tag="" indentLevel="1" text="Constructors"/>
+           </header>
+           <textblocks>
+            <codeblockwithcomments tag="emptyconstructor" indentLevel="1" text="public MotionEvent ( ) { }">
+             <header>
+              <codecomment tag="" indentLevel="1" text="Empty Constructor"/>
+             </header>
+            </codeblockwithcomments>
+           </textblocks>
+          </hierarchicalcodeblock>
+          <hierarchicalcodeblock tag="accessorMethods" indentLevel="1" canDelete="false">
+           <header>
+            <codecomment tag="" indentLevel="1" text="Accessor Methods"/>
+           </header>
+           <textblocks>
+            <hierarchicalcodeblock tag="staticAccessorMethods" indentLevel="1" canDelete="false">
+             <header>
+              <codecomment tag="" writeOutText="false" indentLevel="1"/>
+             </header>
+             <textblocks/>
+            </hierarchicalcodeblock>
+            <hierarchicalcodeblock tag="regularAccessorMethods" indentLevel="1" canDelete="false">
+             <header>
+              <codecomment tag="" writeOutText="false" indentLevel="1"/>
+             </header>
+             <textblocks/>
+            </hierarchicalcodeblock>
+           </textblocks>
+          </hierarchicalcodeblock>
+          <hierarchicalcodeblock tag="operationMethods" indentLevel="1" canDelete="false">
+           <header>
+            <codecomment tag="" indentLevel="1" text="Operations"/>
+           </header>
+           <textblocks/>
+          </hierarchicalcodeblock>
+         </textblocks>
+        </hierarchicalcodeblock>
+       </textblocks>
+      </javaclassdeclarationblock>
+     </textblocks>
+     <header>
+      <codecomment tag=""/>
+     </header>
+     <classfields/>
+    </classifiercodedocument>
+    <classifiercodedocument package="Logical View" fileExt=".java" parent_class="dUtLTznAxS9w" id="dUtLTznAxS9w" fileName="TouchHandler" writeOutCode="true">
+     <textblocks>
+      <codeblockwithcomments tag="packages" text="package Logical View;&amp;#010;">
+       <header>
+        <codecomment tag="" writeOutText="false"/>
+       </header>
+      </codeblockwithcomments>
+      <codeblockwithcomments tag="imports" text="&amp;#010;import Cell;">
+       <header>
+        <codecomment tag="" writeOutText="false"/>
+       </header>
+      </codeblockwithcomments>
+      <javaclassdeclarationblock tag="ClassDeclBlock" parent_id="dUtLTznAxS9w" canDelete="false">
+       <header>
+        <javacodedocumentation tag="" text="Interface TouchHandler&amp;#010;"/>
+       </header>
+       <textblocks>
+        <hierarchicalcodeblock tag="fieldsDecl" indentLevel="1" canDelete="false">
+         <header>
+          <codecomment tag="" writeOutText="false" indentLevel="1" text="Fields"/>
+         </header>
+         <textblocks>
+          <ccfdeclarationcodeblock role_id="1" tag="tblock_0" parent_id="o8sNG8sDe0ng" writeOutText="false" indentLevel="1" text="public GameFieldView  = new GameFieldView ( );" canDelete="false">
+           <header>
+            <codecomment tag="" writeOutText="false" indentLevel="1"/>
+           </header>
+          </ccfdeclarationcodeblock>
+         </textblocks>
+        </hierarchicalcodeblock>
+        <hierarchicalcodeblock tag="methodsBlock" indentLevel="1" canDelete="false">
+         <header>
+          <codecomment tag="" indentLevel="1" text="Methods"/>
+         </header>
+         <textblocks>
+          <hierarchicalcodeblock tag="constructorMethods" indentLevel="1" canDelete="false">
+           <header>
+            <codecomment tag="" indentLevel="1" text="Constructors"/>
+           </header>
+           <textblocks>
+            <codeblockwithcomments tag="emptyconstructor" writeOutText="false" indentLevel="1" text="public TouchHandler ( ) { }">
+             <header>
+              <codecomment tag="" indentLevel="1" text="Empty Constructor"/>
+             </header>
+            </codeblockwithcomments>
+           </textblocks>
+          </hierarchicalcodeblock>
+          <hierarchicalcodeblock tag="accessorMethods" indentLevel="1" canDelete="false">
+           <header>
+            <codecomment tag="" indentLevel="1" text="Accessor Methods"/>
+           </header>
+           <textblocks>
+            <hierarchicalcodeblock tag="staticAccessorMethods" indentLevel="1" canDelete="false">
+             <header>
+              <codecomment tag="" writeOutText="false" indentLevel="1"/>
+             </header>
+             <textblocks/>
+            </hierarchicalcodeblock>
+            <hierarchicalcodeblock tag="regularAccessorMethods" indentLevel="1" canDelete="false">
+             <header>
+              <codecomment tag="" writeOutText="false" indentLevel="1"/>
+             </header>
+             <textblocks>
+              <codeaccessormethod role_id="1" tag="hblock_tag_0" accessType="0" parent_id="o8sNG8sDe0ng" writeOutText="false" indentLevel="1" classfield_id="o8sNG8sDe0ng" text="return ;" canDelete="false">
+               <header>
+                <javacodedocumentation tag="" indentLevel="1" text="Get the value of &amp;#010;&amp;#010;@return the value of "/>
+               </header>
+              </codeaccessormethod>
+              <codeaccessormethod role_id="1" tag="hblock_tag_1" accessType="1" parent_id="o8sNG8sDe0ng" writeOutText="false" indentLevel="1" classfield_id="o8sNG8sDe0ng" text=" = value;" canDelete="false">
+               <header>
+                <javacodedocumentation tag="" indentLevel="1" text="Set the value of &amp;#010;&amp;#010;"/>
+               </header>
+              </codeaccessormethod>
+              <codeaccessormethod role_id="1" tag="hblock_tag_2" accessType="2" parent_id="o8sNG8sDe0ng" writeOutText="false" indentLevel="1" classfield_id="o8sNG8sDe0ng" text=".add(value);" canDelete="false">
+               <header>
+                <javacodedocumentation tag="" indentLevel="1" text="Add an object of type GameFieldView to the List &amp;#010;&amp;#010;@return void"/>
+               </header>
+              </codeaccessormethod>
+              <codeaccessormethod role_id="1" tag="hblock_tag_3" accessType="3" parent_id="o8sNG8sDe0ng" writeOutText="false" indentLevel="1" classfield_id="o8sNG8sDe0ng" text="if (.size() >= 1) {&amp;#010;  .remove(value);&amp;#010;} else {&amp;#010;  System.err.println(&quot;ERROR: Cant removeGameFieldView from , minimum number of items reached.&quot;);&amp;#010;}&amp;#010;" canDelete="false">
+               <header>
+                <javacodedocumentation tag="" indentLevel="1" text="Remove an object of type GameFieldView from the List &amp;#010;"/>
+               </header>
+              </codeaccessormethod>
+              <codeaccessormethod role_id="1" tag="hblock_tag_4" accessType="4" parent_id="o8sNG8sDe0ng" writeOutText="false" indentLevel="1" classfield_id="o8sNG8sDe0ng" text="return (List) ;" canDelete="false">
+               <header>
+                <javacodedocumentation tag="" indentLevel="1" text="Get the list of &amp;#010;&amp;#010;@return List of "/>
+               </header>
+              </codeaccessormethod>
+             </textblocks>
+            </hierarchicalcodeblock>
+           </textblocks>
+          </hierarchicalcodeblock>
+          <hierarchicalcodeblock tag="operationMethods" indentLevel="1" canDelete="false">
+           <header>
+            <codecomment tag="" indentLevel="1" text="Operations"/>
+           </header>
+           <textblocks>
+            <codeoperation tag="operation_SwhS5k2tGa4T" parent_id="SwhS5k2tGa4T" indentLevel="1" canDelete="false">
+             <header>
+              <javacodedocumentation tag="" indentLevel="1" text="&amp;#010;@param cell &amp;#010;@return void  "/>
+             </header>
+            </codeoperation>
+           </textblocks>
+          </hierarchicalcodeblock>
+         </textblocks>
+        </hierarchicalcodeblock>
+       </textblocks>
+      </javaclassdeclarationblock>
+     </textblocks>
+     <header>
+      <codecomment tag=""/>
+     </header>
+     <classfields>
+      <codeclassfield role_id="0" listClassName="" field_type="6357064" parent_id="M2T9tpHT7nIs" writeOutMethods="true" initialValue="">
+       <header>
+        <codecomment tag=""/>
+       </header>
+       <ccfdeclarationcodeblock role_id="1" tag="" parent_id="M2T9tpHT7nIs" writeOutText="false" indentLevel="1" text="public GameFieldView  = new GameFieldView ( );" canDelete="false">
+        <header>
+         <codecomment tag="" writeOutText="false" indentLevel="1"/>
+        </header>
+       </ccfdeclarationcodeblock>
+       <codeaccessormethod role_id="1" tag="" accessType="0" parent_id="M2T9tpHT7nIs" writeOutText="false" indentLevel="1" classfield_id="M2T9tpHT7nIs" text="return ;" canDelete="false">
+        <header>
+         <javacodedocumentation tag="" indentLevel="1" text="Get the value of &amp;#010;&amp;#010;@return the value of "/>
+        </header>
+       </codeaccessormethod>
+       <codeaccessormethod role_id="1" tag="" accessType="1" parent_id="M2T9tpHT7nIs" writeOutText="false" indentLevel="1" classfield_id="M2T9tpHT7nIs" text=" = value;" canDelete="false">
+        <header>
+         <javacodedocumentation tag="" indentLevel="1" text="Set the value of &amp;#010;&amp;#010;"/>
+        </header>
+       </codeaccessormethod>
+       <codeaccessormethod role_id="1" tag="" accessType="2" parent_id="M2T9tpHT7nIs" writeOutText="false" indentLevel="1" classfield_id="M2T9tpHT7nIs" text=".add(value);" canDelete="false">
+        <header>
+         <javacodedocumentation tag="" indentLevel="1" text="Add an object of type GameFieldView to the List &amp;#010;&amp;#010;@return void"/>
+        </header>
+       </codeaccessormethod>
+       <codeaccessormethod role_id="1" tag="" accessType="3" parent_id="M2T9tpHT7nIs" writeOutText="false" indentLevel="1" classfield_id="M2T9tpHT7nIs" text=".remove(value);" canDelete="false">
+        <header>
+         <javacodedocumentation tag="" indentLevel="1" text="Remove an object of type GameFieldView from the List &amp;#010;"/>
+        </header>
+       </codeaccessormethod>
+       <codeaccessormethod role_id="1" tag="" accessType="4" parent_id="M2T9tpHT7nIs" writeOutText="false" indentLevel="1" classfield_id="M2T9tpHT7nIs" text="return (List) ;" canDelete="false">
+        <header>
+         <javacodedocumentation tag="" indentLevel="1" text="Get the list of &amp;#010;&amp;#010;@return List of "/>
+        </header>
+       </codeaccessormethod>
+      </codeclassfield>
+      <codeclassfield role_id="0" listClassName="" field_type="1" parent_id="o8sNG8sDe0ng" writeOutMethods="true" initialValue="">
+       <header>
+        <codecomment tag=""/>
+       </header>
+       <ccfdeclarationcodeblock role_id="1" tag="tblock_0" parent_id="o8sNG8sDe0ng" writeOutText="false" indentLevel="1" text="public GameFieldView  = new GameFieldView ( );" canDelete="false">
+        <header>
+         <codecomment tag="" writeOutText="false" indentLevel="1"/>
+        </header>
+       </ccfdeclarationcodeblock>
+       <codeaccessormethod role_id="1" tag="hblock_tag_0" accessType="0" parent_id="o8sNG8sDe0ng" writeOutText="false" indentLevel="1" classfield_id="o8sNG8sDe0ng" text="return ;" canDelete="false">
+        <header>
+         <javacodedocumentation tag="" indentLevel="1" text="Get the value of &amp;#010;&amp;#010;@return the value of "/>
+        </header>
+       </codeaccessormethod>
+       <codeaccessormethod role_id="1" tag="hblock_tag_1" accessType="1" parent_id="o8sNG8sDe0ng" writeOutText="false" indentLevel="1" classfield_id="o8sNG8sDe0ng" text=" = value;" canDelete="false">
+        <header>
+         <javacodedocumentation tag="" indentLevel="1" text="Set the value of &amp;#010;&amp;#010;"/>
+        </header>
+       </codeaccessormethod>
+       <codeaccessormethod role_id="1" tag="hblock_tag_2" accessType="2" parent_id="o8sNG8sDe0ng" writeOutText="false" indentLevel="1" classfield_id="o8sNG8sDe0ng" text=".add(value);" canDelete="false">
+        <header>
+         <javacodedocumentation tag="" indentLevel="1" text="Add an object of type GameFieldView to the List &amp;#010;&amp;#010;@return void"/>
+        </header>
+       </codeaccessormethod>
+       <codeaccessormethod role_id="1" tag="hblock_tag_3" accessType="3" parent_id="o8sNG8sDe0ng" writeOutText="false" indentLevel="1" classfield_id="o8sNG8sDe0ng" text="if (.size() >= 1) {&amp;#010;  .remove(value);&amp;#010;} else {&amp;#010;  System.err.println(&quot;ERROR: Cant removeGameFieldView from , minimum number of items reached.&quot;);&amp;#010;}&amp;#010;" canDelete="false">
+        <header>
+         <javacodedocumentation tag="" indentLevel="1" text="Remove an object of type GameFieldView from the List &amp;#010;"/>
+        </header>
+       </codeaccessormethod>
+       <codeaccessormethod role_id="1" tag="hblock_tag_4" accessType="4" parent_id="o8sNG8sDe0ng" writeOutText="false" indentLevel="1" classfield_id="o8sNG8sDe0ng" text="return (List) ;" canDelete="false">
+        <header>
+         <javacodedocumentation tag="" indentLevel="1" text="Get the list of &amp;#010;&amp;#010;@return List of "/>
+        </header>
+       </codeaccessormethod>
+      </codeclassfield>
+     </classfields>
+    </classifiercodedocument>
+    <classifiercodedocument package="Logical View" fileExt=".java" parent_class="MiG15cl4TNNl" id="MiG15cl4TNNl" fileName="Cell" writeOutCode="true">
+     <textblocks>
+      <codeblockwithcomments tag="packages" text="package Logical View;&amp;#010;">
+       <header>
+        <codecomment tag="" writeOutText="false"/>
+       </header>
+      </codeblockwithcomments>
+      <codeblockwithcomments tag="imports" writeOutText="false">
+       <header>
+        <codecomment tag="" writeOutText="false"/>
+       </header>
+      </codeblockwithcomments>
+      <javaclassdeclarationblock tag="ClassDeclBlock" parent_id="MiG15cl4TNNl" canDelete="false">
+       <header>
+        <javacodedocumentation tag="" text="Class Cell&amp;#010;"/>
+       </header>
+       <textblocks>
+        <hierarchicalcodeblock tag="fieldsDecl" indentLevel="1" canDelete="false">
+         <header>
+          <codecomment tag="" indentLevel="1" text="Fields"/>
+         </header>
+         <textblocks/>
+        </hierarchicalcodeblock>
+        <hierarchicalcodeblock tag="methodsBlock" indentLevel="1" canDelete="false">
+         <header>
+          <codecomment tag="" indentLevel="1" text="Methods"/>
+         </header>
+         <textblocks>
+          <hierarchicalcodeblock tag="constructorMethods" indentLevel="1" canDelete="false">
+           <header>
+            <codecomment tag="" indentLevel="1" text="Constructors"/>
+           </header>
+           <textblocks>
+            <codeblockwithcomments tag="emptyconstructor" indentLevel="1" text="public Cell ( ) { }">
+             <header>
+              <codecomment tag="" indentLevel="1" text="Empty Constructor"/>
+             </header>
+            </codeblockwithcomments>
+           </textblocks>
+          </hierarchicalcodeblock>
+          <hierarchicalcodeblock tag="accessorMethods" indentLevel="1" canDelete="false">
+           <header>
+            <codecomment tag="" indentLevel="1" text="Accessor Methods"/>
+           </header>
+           <textblocks>
+            <hierarchicalcodeblock tag="staticAccessorMethods" indentLevel="1" canDelete="false">
+             <header>
+              <codecomment tag="" writeOutText="false" indentLevel="1"/>
+             </header>
+             <textblocks/>
+            </hierarchicalcodeblock>
+            <hierarchicalcodeblock tag="regularAccessorMethods" indentLevel="1" canDelete="false">
+             <header>
+              <codecomment tag="" writeOutText="false" indentLevel="1"/>
+             </header>
+             <textblocks/>
+            </hierarchicalcodeblock>
+           </textblocks>
+          </hierarchicalcodeblock>
+          <hierarchicalcodeblock tag="operationMethods" indentLevel="1" canDelete="false">
+           <header>
+            <codecomment tag="" indentLevel="1" text="Operations"/>
+           </header>
+           <textblocks/>
+          </hierarchicalcodeblock>
+         </textblocks>
+        </hierarchicalcodeblock>
+       </textblocks>
+      </javaclassdeclarationblock>
+     </textblocks>
+     <header>
+      <codecomment tag=""/>
+     </header>
+     <classfields/>
+    </classifiercodedocument>
+    <classifiercodedocument package="Datatypes" fileExt=".java" parent_class="LTLB0I4zrIee" id="LTLB0I4zrIee" fileName="Vector_TouchHandler_" writeOutCode="true">
+     <textblocks>
+      <codeblockwithcomments tag="packages" text="package Datatypes;&amp;#010;">
+       <header>
+        <codecomment tag="" writeOutText="false"/>
+       </header>
+      </codeblockwithcomments>
+      <codeblockwithcomments tag="imports" writeOutText="false">
+       <header>
+        <codecomment tag="" writeOutText="false"/>
+       </header>
+      </codeblockwithcomments>
+      <javaclassdeclarationblock tag="ClassDeclBlock" parent_id="LTLB0I4zrIee" canDelete="false">
+       <header>
+        <javacodedocumentation tag="" text="Class Vector_TouchHandler_&amp;#010;"/>
+       </header>
+       <textblocks>
+        <hierarchicalcodeblock tag="fieldsDecl" indentLevel="1" canDelete="false">
+         <header>
+          <codecomment tag="" indentLevel="1" text="Fields"/>
+         </header>
+         <textblocks/>
+        </hierarchicalcodeblock>
+        <hierarchicalcodeblock tag="methodsBlock" indentLevel="1" canDelete="false">
+         <header>
+          <codecomment tag="" indentLevel="1" text="Methods"/>
+         </header>
+         <textblocks>
+          <hierarchicalcodeblock tag="constructorMethods" indentLevel="1" canDelete="false">
+           <header>
+            <codecomment tag="" indentLevel="1" text="Constructors"/>
+           </header>
+           <textblocks>
+            <codeblockwithcomments tag="emptyconstructor" writeOutText="false" indentLevel="1" text="public Vector_TouchHandler_ ( ) { }">
+             <header>
+              <codecomment tag="" indentLevel="1" text="Empty Constructor"/>
+             </header>
+            </codeblockwithcomments>
+           </textblocks>
+          </hierarchicalcodeblock>
+          <hierarchicalcodeblock tag="accessorMethods" indentLevel="1" canDelete="false">
+           <header>
+            <codecomment tag="" indentLevel="1" text="Accessor Methods"/>
+           </header>
+           <textblocks>
+            <hierarchicalcodeblock tag="staticAccessorMethods" indentLevel="1" canDelete="false">
+             <header>
+              <codecomment tag="" writeOutText="false" indentLevel="1"/>
+             </header>
+             <textblocks/>
+            </hierarchicalcodeblock>
+            <hierarchicalcodeblock tag="regularAccessorMethods" indentLevel="1" canDelete="false">
+             <header>
+              <codecomment tag="" writeOutText="false" indentLevel="1"/>
+             </header>
+             <textblocks/>
+            </hierarchicalcodeblock>
+           </textblocks>
+          </hierarchicalcodeblock>
+          <hierarchicalcodeblock tag="operationMethods" indentLevel="1" canDelete="false">
+           <header>
+            <codecomment tag="" indentLevel="1" text="Operations"/>
+           </header>
+           <textblocks/>
           </hierarchicalcodeblock>
          </textblocks>
         </hierarchicalcodeblock>
