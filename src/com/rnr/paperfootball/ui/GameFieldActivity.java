@@ -2,7 +2,6 @@ package com.rnr.paperfootball.ui;
 
 import com.rnr.paperfootball.LocalPlayer;
 import com.rnr.paperfootball.LocalPlayerController;
-import com.rnr.paperfootball.TestPlayer;
 import com.rnr.paperfootball.base.BaseMapBuilder;
 import com.rnr.paperfootball.core.Game;
 import com.rnr.paperfootball.core.InsufficientPlayersException;
@@ -26,6 +25,7 @@ public class GameFieldActivity extends Activity {
         this.mGame = new Game(this.mGameBuilder.createMap());
 
         this.mGameFieldView = new GameFieldView(this);
+        this.mGameFieldView.setGame(this.mGame);
         this.mGameFieldView.setMapPainter(this.mGameBuilder.createMapPainter(this.mGame.getMap()));
         this.mGame.getMap().addHandler(this.mGameFieldView);
 
@@ -33,8 +33,8 @@ public class GameFieldActivity extends Activity {
 
         this.mGameFieldView.addHandler(playerController);
 
-        this.mGame.addPlayer(new LocalPlayer(playerController));
-        this.mGame.addPlayer(new LocalPlayer(playerController));
+        this.mGame.addPlayer(new LocalPlayer("Player 1", playerController));
+        this.mGame.addPlayer(new LocalPlayer("Player 2", playerController));
 
         this.setContentView(this.mGameFieldView);
         this.mGameFieldView.requestFocus();

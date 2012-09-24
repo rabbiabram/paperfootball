@@ -11,9 +11,11 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import android.widget.Toast;
 
 import com.rnr.paperfootball.base.BaseMap;
 import com.rnr.paperfootball.base.BaseMapController;
+import com.rnr.paperfootball.core.Game;
 import com.rnr.paperfootball.core.GameCallback;
 import com.rnr.paperfootball.core.TouchHandler;
 
@@ -22,6 +24,7 @@ public class GameFieldView extends SurfaceView implements SurfaceHolder.Callback
 	private BaseMapController mPainter;
 	private boolean mSurfaceCreated;
 	private Vector<TouchHandler> mTouchHandler;
+	private Game mGame;
 
 	public void addHandler(TouchHandler handler) {
 		this.mTouchHandler.add(handler);
@@ -73,6 +76,9 @@ public class GameFieldView extends SurfaceView implements SurfaceHolder.Callback
 	public void setMapPainter(BaseMapController mapPainter) {
 		this.mPainter = mapPainter;
 	}
+	public void setGame(Game game) {
+		this.mGame = game;
+	}
 
 	@Override
 	public void surfaceChanged(SurfaceHolder surfaceHolder, int arg1, int arg2, int arg3) {
@@ -101,5 +107,19 @@ public class GameFieldView extends SurfaceView implements SurfaceHolder.Callback
 			handler.setPoint(this.mPainter, event.getX(), event.getY());
 		}
 		return false;
+	}
+
+	@Override
+	public void endOfGame(int indexPlayer) {
+		final int closureIndexPlayer = indexPlayer;
+		this.post(new Runnable() {
+			@Override
+			public void run() {
+				Toast.makeText(getContext(),
+						String.format("Победил игрок: %s",
+								mGame.getPlayers().get(closureIndexPlayer).getName()),
+						Toast.LENGTH_LONG).show();
+			}
+		});
 	}
 }

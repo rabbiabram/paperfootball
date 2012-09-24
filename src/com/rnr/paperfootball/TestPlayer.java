@@ -8,6 +8,10 @@ import com.rnr.paperfootball.core.Cell;
 
 public class TestPlayer extends BasePlayer {
 
+	public TestPlayer(String name) {
+		super(name);
+	}
+
 	@Override
 	public Vector<Cell> Turn(BaseMap gameMap) {
 		Vector<Cell> path = new Vector<Cell>();
