@@ -17,7 +17,8 @@ import com.rnr.paperfootball.core.PathGetter;
 public class LocalPlayer extends BasePlayer {
 	PathGetter mPathGetter;
 
-	public LocalPlayer(PathGetter pathGetter) {
+	public LocalPlayer(String name, PathGetter pathGetter) {
+		super(name);
 		this.mPathGetter = pathGetter;
 	}
 
