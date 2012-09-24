@@ -5,7 +5,7 @@ package com.rnr.paperfootball.map;
 
 import com.rnr.paperfootball.base.BaseMap;
 import com.rnr.paperfootball.base.BaseMapBuilder;
-import com.rnr.paperfootball.base.BaseMapPainter;
+import com.rnr.paperfootball.base.BaseMapController;
 
 
 /**
@@ -20,7 +20,7 @@ public class MapBuilder extends BaseMapBuilder {
 	}
 
 	@Override
-	public BaseMapPainter createMapPainter(BaseMap gameMap) {
-		return new MapPainter((Map)gameMap);
+	public BaseMapController createMapPainter(BaseMap gameMap) {
+		return new MapController((Map)gameMap);
 	}
 }
