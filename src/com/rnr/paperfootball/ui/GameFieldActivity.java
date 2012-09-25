@@ -27,7 +27,7 @@ public class GameFieldActivity extends Activity {
         this.mGameFieldView = new GameFieldView(this);
         this.mGameFieldView.setGame(this.mGame);
         this.mGameFieldView.setMapPainter(this.mGameBuilder.createMapPainter(this.mGame.getMap()));
-        this.mGame.getMap().addHandler(this.mGameFieldView);
+        this.mGame.addHandler(this.mGameFieldView);
 
         LocalPlayerController playerController = new LocalPlayerController();
 
