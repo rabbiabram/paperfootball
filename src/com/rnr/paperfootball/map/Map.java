@@ -166,7 +166,6 @@ public class Map extends BaseMap {
 				this.mLinks.add(new Link(this.mCurrent, cell));
 				this.mCurrent = cell;
 			}
-			this.sendRepaint();
 			return true;
 		}
 		return false;

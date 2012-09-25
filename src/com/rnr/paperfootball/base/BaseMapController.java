@@ -16,9 +16,5 @@ import android.graphics.Canvas;
 public abstract class BaseMapController {
 	public abstract void draw(Canvas canvas);
 	public abstract Cell getCell(float x, float y);
-	public abstract void setCurrentPath(Vector<Cell> path, boolean isRepaint);
-
-	public void setCurrentPath(Vector<Cell> path) {
-			this.setCurrentPath(path, true);
-	}
+	public abstract void setCurrentPath(Vector<Cell> path);
 }

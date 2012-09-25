@@ -23,11 +23,8 @@ public class MapController extends BaseMapController {
 	Vector<Cell> mCurrentPath;
 
 	@Override
-	public void setCurrentPath(Vector<Cell> path, boolean isRepaint) {
+	public void setCurrentPath(Vector<Cell> path) {
 		this.mCurrentPath = path;
-		if (isRepaint) {
-			this.mGameMap.sendRepaint();
-		}
 	}
 
 	public MapController(Map gameMap) {
@@ -141,12 +138,11 @@ public class MapController extends BaseMapController {
 
 		Cell cell = null;
 
-		if ((Math.abs(cellX * this.mWidthCell - x) < 3) &&
-				(Math.abs(cellY * this.mWidthCell - y) < 3)) {
+		if ((Math.abs(cellX * this.mWidthCell - x) < 0.5 * this.mWidthCell) &&
+				(Math.abs(cellY * this.mWidthCell - y) < 0.5 * this.mWidthCell)) {
 			cell = this.mGameMap.getCell(new Cell(cellX, cellY));
 		};
 
 		return cell;
 	}
-
 }

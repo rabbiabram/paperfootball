@@ -18,6 +18,7 @@ import com.rnr.paperfootball.base.BaseMapController;
 import com.rnr.paperfootball.core.Game;
 import com.rnr.paperfootball.core.GameCallback;
 import com.rnr.paperfootball.core.TouchHandler;
+import com.rnr.paperfootball.core.WrongPathException;
 
 public class GameFieldView extends SurfaceView implements SurfaceHolder.Callback, GameCallback,
 		OnTouchListener {
@@ -104,7 +105,14 @@ public class GameFieldView extends SurfaceView implements SurfaceHolder.Callback
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {
 		for (TouchHandler handler : this.mTouchHandler) {
-			handler.setPoint(this.mPainter, event.getX(), event.getY());
+			try {
+				if (handler.setPoint(this.mPainter, event.getX(), event.getY())) {
+					this.paintField(this.getHolder());
+				}
+			} catch (WrongPathException e) {
+				Toast.makeText(getContext(), e.getMessage(),
+						Toast.LENGTH_SHORT).show();
+			}
 		}
 		return false;
 	}
