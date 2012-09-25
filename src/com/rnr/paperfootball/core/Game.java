@@ -19,6 +19,28 @@ public class Game extends Thread {
 	private BasePlayer mCurrentPlayer;
 	private int mTurnCount;
 
+	protected Vector<GameCallback> mHandlers;
+
+	public void addHandler(GameCallback callback) {
+		this.mHandlers.add(callback);
+	}
+
+	public void removeHandler(GameCallback callback) {
+		this.mHandlers.remove(callback);
+	}
+
+	public void sendRepaint() {
+		for (GameCallback callback : this.mHandlers) {
+			callback.repaint(this.mGameMap);
+		}
+	}
+
+	public void sendEndOfGame(int indexPlayer) {
+		for (GameCallback callback : this.mHandlers) {
+			callback.endOfGame(indexPlayer);
+		}
+	}
+
 	public int getTurnCount() {
 		return this.mTurnCount;
 	}
@@ -35,6 +57,7 @@ public class Game extends Thread {
 		this.mGameMap = gameMap;
 		this.mPlayers = new Vector<BasePlayer>();
 		this.isStart = false;
+		this.mHandlers = new Vector<GameCallback>();
 	}
 
 	public Vector<BasePlayer> getPlayers() {
@@ -80,9 +103,11 @@ public class Game extends Thread {
 				}
 				while (!this.mGameMap.pavePath(path));
 
+				this.sendRepaint();
+
 				int indexWinner = this.mGameMap.getIndexWinner();
 				if (indexWinner != -1) {
-					this.mGameMap.sendEndOfGame(indexWinner);
+					this.sendEndOfGame(indexWinner);
 					break;
 				}
 
