@@ -53,6 +53,13 @@ public class MapController extends BaseMapController {
 	@Override
 	public void draw(Canvas canvas) {
 
+		Paint fill = new Paint();
+		fill.setStyle(Paint.Style.FILL);
+
+		// закрашиваем холст белым цветом
+		fill.setColor(Color.BLACK);
+		canvas.drawPaint(fill);
+
 		Paint pEmptyLine = new Paint();
 		Paint pLine = new Paint();
 
@@ -83,7 +90,7 @@ public class MapController extends BaseMapController {
 		}
 		// Крайние линии справа
 		for (int y = Map.INDEX_HEIGHT_MIN; y < Map.INDEX_HEIGHT_MAX; y++) {
-			int x = Map.CELLS_COL_COUNT - 1;
+			int x = Map.INDEX_WIDTH_MAX;
 			Cell cellA = this.mGameMap.getCell(new Cell(x, y));
 			Cell cellB = this.mGameMap.getCell(new Cell(x, y + 1));
 
@@ -91,15 +98,14 @@ public class MapController extends BaseMapController {
 		}
 		// Крайние линии снизу
 		for (int x = Map.INDEX_WIDTH_MIN; x < Map.INDEX_WIDTH_MAX; x++) {
-			int y = Map.CELLS_ROW_COUNT - 1;
+			int y = Map.INDEX_HEIGHT_MAX;
 			Cell cellA = this.mGameMap.getCell(new Cell(x, y));
 			Cell cellB = this.mGameMap.getCell(new Cell(x + 1, y));
 
-			Cell cell = this.mGameMap.getCell(new Cell(x, Map.INDEX_HEIGHT_MIN + 1));
-			Cell cellXY = this.mGameMap.getCell(new Cell(x, Map.INDEX_HEIGHT_MIN));
+			Cell cellXY = this.mGameMap.getCell(new Cell(x + 1, y - 1));
 
 			this.paintLine(canvas, cellA, cellB, pLine, pEmptyLine);
-			this.paintLine(canvas, cell, cellXY, pLine);
+			this.paintLine(canvas, cellA, cellXY, pLine);
 		}
 
 		Cell currentCell = this.mGameMap.getCurrent();
