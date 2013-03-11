@@ -27,6 +27,11 @@ public class GameFieldView extends SurfaceView implements SurfaceHolder.Callback
 	private Vector<TouchHandler> mTouchHandler;
 	private Game mGame;
 
+	public void copyFrom(GameFieldView fv) {
+        this.setGame(fv.mGame);
+        this.setMapPainter(fv.mPainter);
+        this.mTouchHandler = (Vector<TouchHandler>) fv.mTouchHandler.clone();
+	}
 	public void addHandler(TouchHandler handler) {
 		this.mTouchHandler.add(handler);
 	}
