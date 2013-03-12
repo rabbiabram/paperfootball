@@ -52,6 +52,7 @@ public class MapController extends BaseMapController {
 	 */
 	@Override
 	public void draw(Canvas canvas) {
+		this.calculateWidthCell(canvas);
 
 		Paint fill = new Paint();
 		fill.setStyle(Paint.Style.FILL);
@@ -135,6 +136,11 @@ public class MapController extends BaseMapController {
 		pBall.setColor(Color.RED);
 
 		canvas.drawCircle(currentCell.getX() * this.mWidthCell, currentCell.getY() * this.mWidthCell, 3, pBall);
+	}
+
+	protected void calculateWidthCell(Canvas canvas) {
+//		Log.v("paper", String.format("Height: %d, width: %d", canvas.getHeight(), canvas.getWidth()));
+		this.mWidthCell = Math.min(canvas.getHeight() / Map.CELLS_ROW_COUNT, canvas.getWidth() / Map.CELLS_COL_COUNT);
 	}
 
 	@Override

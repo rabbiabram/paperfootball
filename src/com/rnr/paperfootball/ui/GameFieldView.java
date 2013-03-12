@@ -30,8 +30,9 @@ public class GameFieldView extends SurfaceView implements SurfaceHolder.Callback
 	public void copyFrom(GameFieldView fv) {
         this.setGame(fv.mGame);
         this.setMapPainter(fv.mPainter);
-        this.mTouchHandler = (Vector<TouchHandler>) fv.mTouchHandler.clone();
+    	this.mTouchHandler = new Vector<TouchHandler>(fv.mTouchHandler);
 	}
+	
 	public void addHandler(TouchHandler handler) {
 		this.mTouchHandler.add(handler);
 	}
@@ -49,7 +50,7 @@ public class GameFieldView extends SurfaceView implements SurfaceHolder.Callback
         try {
     		Picture picture = new Picture();
 
-    		Canvas canvas = picture.beginRecording(500, 500);
+    		Canvas canvas = picture.beginRecording(C.getWidth(), C.getHeight());
         	this.mPainter.draw(canvas);
     		picture.draw(C);
         } finally{

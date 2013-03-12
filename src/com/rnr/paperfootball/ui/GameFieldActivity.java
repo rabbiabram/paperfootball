@@ -8,9 +8,7 @@ import com.rnr.paperfootball.core.InsufficientPlayersException;
 import com.rnr.paperfootball.map.MapBuilder;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 
 public class GameFieldActivity extends Activity {
@@ -75,7 +73,6 @@ public class GameFieldActivity extends Activity {
     }
     @Override
     public Object onRetainNonConfigurationInstance() {
-    	Log.d("paper", "onRetainNonConfigurationInstance");
 		return this;
     }
 }
