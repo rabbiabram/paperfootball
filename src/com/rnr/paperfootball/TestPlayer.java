@@ -8,8 +8,8 @@ import com.rnr.paperfootball.core.Cell;
 
 public class TestPlayer extends BasePlayer {
 
-	public TestPlayer(String name) {
-		super(name);
+	public TestPlayer(String name, int color) {
+		super(name, color);
 	}
 
 	@Override

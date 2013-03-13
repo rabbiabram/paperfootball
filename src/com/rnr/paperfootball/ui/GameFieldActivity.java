@@ -8,6 +8,7 @@ import com.rnr.paperfootball.core.InsufficientPlayersException;
 import com.rnr.paperfootball.map.MapBuilder;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 
@@ -35,15 +36,15 @@ public class GameFieldActivity extends Activity {
 	
 	        this.mGameFieldView = new GameFieldView(this);
 	        this.mGameFieldView.setGame(this.mGame);
-	        this.mGameFieldView.setMapPainter(this.mGameBuilder.createMapPainter(this.mGame.getMap()));
+	        this.mGameFieldView.setMapPainter(this.mGameBuilder.createMapPainter(this.mGame));
 	        this.mGame.addHandler(this.mGameFieldView);
 	
 	        LocalPlayerController playerController = new LocalPlayerController();
 	
 	        this.mGameFieldView.addHandler(playerController);
 	
-	        this.mGame.addPlayer(new LocalPlayer("Player 1", playerController));
-	        this.mGame.addPlayer(new LocalPlayer("Player 2", playerController));
+	        this.mGame.addPlayer(new LocalPlayer("Player 1", Color.RED, playerController));
+	        this.mGame.addPlayer(new LocalPlayer("Player 2", Color.GREEN, playerController));
 	
 	        this.setContentView(this.mGameFieldView);
 	        this.mGameFieldView.requestFocus();

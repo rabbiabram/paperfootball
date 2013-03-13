@@ -13,9 +13,17 @@ import com.rnr.paperfootball.core.Cell;
  */
 public abstract class BasePlayer {
 	private String mName;
+	private int mWins;
+	private int mColor;
 
-	public BasePlayer(String name) {
+	public BasePlayer(String name, int color) {
 		this.setName(name);
+		this.mWins = 0;
+		this.mColor = color;
+	}
+	
+	public int getColor() {
+		return this.mColor;
 	}
 	/**
 	 * @return the name
@@ -24,6 +32,13 @@ public abstract class BasePlayer {
 		return this.mName;
 	}
 
+	public int getWins() {
+		return this.mWins;
+	}
+	
+	public void incWins() {
+		++this.mWins;
+	}
 	/**
 	 * @param name the name to set
 	 */

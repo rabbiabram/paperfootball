@@ -21,6 +21,9 @@ public class Game extends Thread {
 
 	protected Vector<GameCallback> mHandlers;
 
+	public BasePlayer getCurrentPlayer() {
+		return this.mCurrentPlayer;
+	}
 	public void addHandler(GameCallback callback) {
 		this.mHandlers.add(callback);
 	}
@@ -94,6 +97,7 @@ public class Game extends Thread {
 			while (true) {
 				Vector<Cell> path;
 
+				this.sendRepaint();
 				do {
 					path = this.mCurrentPlayer.Turn(this.mGameMap);
 
@@ -102,8 +106,6 @@ public class Game extends Thread {
 					}
 				}
 				while (!this.mGameMap.pavePath(path));
-
-				this.sendRepaint();
 
 				int indexWinner = this.mGameMap.getIndexWinner();
 				if (indexWinner != -1) {

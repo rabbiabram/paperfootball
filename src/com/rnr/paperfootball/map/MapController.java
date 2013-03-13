@@ -7,10 +7,12 @@ import java.util.Vector;
 
 import com.rnr.paperfootball.base.BaseMapController;
 import com.rnr.paperfootball.core.Cell;
+import com.rnr.paperfootball.core.Game;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 
 /**
  * @author rodnover
@@ -20,6 +22,7 @@ public class MapController extends BaseMapController {
 
 	private float mWidthCell;
 	private Map mGameMap;
+	private Game mGame;
 	Vector<Cell> mCurrentPath;
 
 	@Override
@@ -27,9 +30,10 @@ public class MapController extends BaseMapController {
 		this.mCurrentPath = path;
 	}
 
-	public MapController(Map gameMap) {
+	public MapController(Game game) {
 		this.mWidthCell = 30;
-		this.mGameMap = gameMap;
+		this.mGame = game;
+		this.mGameMap = (Map)game.getMap();
 	}
 
 	private void paintLine(Canvas canvas, Cell a, Cell b, Paint pLine, Paint pEmptyLine) {
@@ -52,7 +56,7 @@ public class MapController extends BaseMapController {
 	 */
 	@Override
 	public void draw(Canvas canvas) {
-		this.calculateWidthCell(canvas);
+		this.mWidthCell = this.calculateWidthCell(canvas.getWidth(), canvas.getHeight());
 
 		Paint fill = new Paint();
 		fill.setStyle(Paint.Style.FILL);
@@ -133,14 +137,13 @@ public class MapController extends BaseMapController {
 		}
 		// Рисуем мячик
 		Paint pBall = new Paint();
-		pBall.setColor(Color.RED);
+		pBall.setColor(this.mGame.getCurrentPlayer().getColor());
 
 		canvas.drawCircle(currentCell.getX() * this.mWidthCell, currentCell.getY() * this.mWidthCell, 3, pBall);
 	}
 
-	protected void calculateWidthCell(Canvas canvas) {
-//		Log.v("paper", String.format("Height: %d, width: %d", canvas.getHeight(), canvas.getWidth()));
-		this.mWidthCell = Math.min(canvas.getHeight() / Map.CELLS_ROW_COUNT, canvas.getWidth() / Map.CELLS_COL_COUNT);
+	protected float calculateWidthCell(int width, int height) {
+		return Math.min(height / Map.CELLS_ROW_COUNT, width / Map.CELLS_COL_COUNT);
 	}
 
 	@Override
@@ -156,5 +159,12 @@ public class MapController extends BaseMapController {
 		};
 
 		return cell;
+	}
+
+	@Override
+	public Rect getRect(int width, int height) {
+		float sizeCell = this.calculateWidthCell(width, height);
+		return new Rect(0, 0, Math.round(sizeCell * (Map.CELLS_COL_COUNT - 1)), 
+				Math.round(sizeCell * (Map.CELLS_ROW_COUNT - 1)));
 	}
 }
