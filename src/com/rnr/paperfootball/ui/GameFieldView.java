@@ -10,6 +10,7 @@ import android.graphics.Paint;
 import android.graphics.Picture;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -32,6 +33,8 @@ public class GameFieldView extends SurfaceView implements SurfaceHolder.Callback
 	private Vector<TouchHandler> mTouchHandler;
 	private Game mGame;
 	private Rect mField;
+	private int mWidth;
+	private int mHeight;
 
 	public void copyFrom(GameFieldView fv) {
         this.setGame(fv.mGame);
@@ -65,17 +68,19 @@ public class GameFieldView extends SurfaceView implements SurfaceHolder.Callback
         Canvas C = surfaceHolder.lockCanvas();
 
         try {
-    		int width = C.getWidth();
-    		int height = C.getHeight();
+    		int width = this.mWidth - 6;
+    		int height = this.mHeight - 6;
+    		
     		Picture picture = new Picture();
 
     		Rect rect = this.mPainter.getRect(width, height);
 
     		
-        	this.mField = new Rect((width - rect.width()) / 2, 
-        			0, (width + rect.width()) / 2, 
+        	this.mField = new Rect((width - rect.width()) / 2 + 3, 
+        			3, (width + rect.width()) / 2,  
         			rect.height());
-    		Canvas canvas = picture.beginRecording(this.mField.width(), this.mField.height());
+
+        	Canvas canvas = picture.beginRecording(this.mField.width(), this.mField.height());
         	this.mPainter.draw(canvas);
     		C.drawPicture(picture, this.mField);
 
@@ -87,7 +92,7 @@ public class GameFieldView extends SurfaceView implements SurfaceHolder.Callback
 				String str = String.format(Locale.getDefault(), "%d", player.getWins());
 				pnt.setTextSize(this.mField.height() / 8);
 				C.drawText(str, this.mField.left - 5, 
-						(this.mField.top + this.mField.bottom) / 2, pnt);
+						this.mField.centerY() + pnt.getTextSize() / 2, pnt);
 
 				player = this.mGame.getPlayers().get(1);  
 				pnt = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.LINEAR_TEXT_FLAG);
@@ -95,8 +100,8 @@ public class GameFieldView extends SurfaceView implements SurfaceHolder.Callback
 				pnt.setTextAlign(Paint.Align.LEFT);
 				str = String.format(Locale.getDefault(), "%d", player.getWins());
 				pnt.setTextSize(this.mField.height() / 8);
-				C.drawText(str, this.mField.right - 25, 
-						(this.mField.top + this.mField.bottom) / 2, pnt);
+				C.drawText(str, this.mField.right + 5, 
+						this.mField.centerY() + pnt.getTextSize() / 2, pnt);
     		} else {
     			BasePlayer player = this.mGame.getPlayers().get(0);  
 				Paint pnt = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.LINEAR_TEXT_FLAG);
@@ -200,6 +205,8 @@ public class GameFieldView extends SurfaceView implements SurfaceHolder.Callback
 	@Override
 	public void endOfGame(int indexPlayer) {
 		final int closureIndexPlayer = indexPlayer;
+		mGame.getPlayers().get(closureIndexPlayer).incWins();
+		this.mPainter.setCurrentPath(null);
 		this.post(new Runnable() {
 			@Override
 			public void run() {
@@ -207,8 +214,16 @@ public class GameFieldView extends SurfaceView implements SurfaceHolder.Callback
 						String.format("Победил игрок: %s",
 								mGame.getPlayers().get(closureIndexPlayer).getName()),
 						Toast.LENGTH_LONG).show();
-				mGame.getPlayers().get(closureIndexPlayer).incWins();
 			}
 		});
+		mGame.sendRepaint();
 	}
+
+	 @Override
+	 protected void onMeasure (int widthMeasureSpec, int heightMeasureSpec)
+	 {
+	     super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+	     this.mWidth = MeasureSpec.getSize(widthMeasureSpec);
+	     this.mHeight = MeasureSpec.getSize(heightMeasureSpec);
+	 }
 }

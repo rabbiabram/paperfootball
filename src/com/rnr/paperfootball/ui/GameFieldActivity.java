@@ -2,6 +2,7 @@ package com.rnr.paperfootball.ui;
 
 import com.rnr.paperfootball.LocalPlayer;
 import com.rnr.paperfootball.LocalPlayerController;
+import com.rnr.paperfootball.R;
 import com.rnr.paperfootball.base.BaseMapBuilder;
 import com.rnr.paperfootball.core.Game;
 import com.rnr.paperfootball.core.InsufficientPlayersException;
@@ -11,6 +12,8 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 public class GameFieldActivity extends Activity {
 
@@ -68,9 +71,25 @@ public class GameFieldActivity extends Activity {
         }
     }
 
-    @Override
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) 
+	{
+		switch (item.getItemId()) {
+		case R.id.new_game:
+			this.mGame.startNew();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		
+		}
+		
+	}
+
+	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        return false;
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.game_field, menu);
+        return true;    
     }
     @Override
     public Object onRetainNonConfigurationInstance() {

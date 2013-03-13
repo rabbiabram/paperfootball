@@ -29,57 +29,6 @@ public class Map extends BaseMap {
 	public static final int FRONT_LINE_OFFSET = 2;
 	public static final int GOAL_LINE_OFFSET = 1;
 
-	public Map() {
-		this.mCells = new Vector<Cell>(Map.CELLS_COUNT);
-		this.mLinks = new Vector<Link>();
-		this.mGoals = new Vector<Cell>();
-
-		for (int x = Map.INDEX_WIDTH_MIN; x < Map.CELLS_COL_COUNT; x++) {
-			for (int y = Map.INDEX_HEIGHT_MIN; y < Map.CELLS_ROW_COUNT; y++) {
-				this.mCells.add(new Cell(x, y));
-			}
-		}
-
-		for (int x = Map.INDEX_WIDTH_MIN; x < Map.INDEX_WIDTH_MAX; x++) {
-			Cell a0 = this.getCell(new Cell(x, Map.INDEX_HEIGHT_MIN));
-			Cell b0 = this.getCell(new Cell(x + 1, Map.INDEX_HEIGHT_MIN));
-			Cell a = this.getCell(new Cell(x, Map.INDEX_HEIGHT_MAX));
-			Cell b = this.getCell(new Cell(x + 1, Map.INDEX_HEIGHT_MAX));
-
-			this.mLinks.add(new Link(a0, b0));
-			this.mLinks.add(new Link(a, b));
-		}
-
-		this.mCurrent = this.getCell(new Cell(Map.INDEX_WIDTH_CENTER, Map.INDEX_HEIGHT_CENTER));
-
-		for (int y = Map.INDEX_HEIGHT_MIN; y < Map.INDEX_HEIGHT_MAX; y++) {
-
-			if ((y < Map.INDEX_HEIGHT_CENTER - Map.GOAL_LINE_OFFSET) ||
-					(y >= Map.INDEX_HEIGHT_CENTER + Map.GOAL_LINE_OFFSET)) {
-				Cell a0 = this.getCell(new Cell(Map.INDEX_WIDTH_MIN, y));
-				Cell b0 = this.getCell(new Cell(Map.INDEX_WIDTH_MIN, y + 1));
-				Cell a1 = this.getCell(new Cell(Map.INDEX_WIDTH_MAX, y));
-				Cell b1 = this.getCell(new Cell(Map.INDEX_WIDTH_MAX, y + 1));
-
-				this.mLinks.add(new Link(a0, b0));
-				this.mLinks.add(new Link(a1, b1));
-			}
-
-			Cell a2 = this.getCell(new Cell(Map.INDEX_WIDTH_CENTER - Map.FRONT_LINE_OFFSET, y));
-			Cell b2 = this.getCell(new Cell(Map.INDEX_WIDTH_CENTER - Map.FRONT_LINE_OFFSET, y + 1));
-			Cell a3 = this.getCell(new Cell(Map.INDEX_WIDTH_CENTER, y));
-			Cell b3 = this.getCell(new Cell(Map.INDEX_WIDTH_CENTER, y + 1));
-			Cell a4 = this.getCell(new Cell(Map.INDEX_WIDTH_CENTER + Map.FRONT_LINE_OFFSET, y));
-			Cell b4 = this.getCell(new Cell(Map.INDEX_WIDTH_CENTER + Map.FRONT_LINE_OFFSET, y + 1));
-
-			this.mLinks.add(new Link(a2, b2));
-			this.mLinks.add(new Link(a3, b3));
-			this.mLinks.add(new Link(a4, b4));
-		}
-		this.mGoals.add(this.getCell(new Cell(Map.INDEX_WIDTH_MAX, Map.INDEX_HEIGHT_CENTER)));
-		this.mGoals.add(this.getCell(new Cell(Map.INDEX_WIDTH_MIN, Map.INDEX_HEIGHT_CENTER)));
-	}
-
 	// TODO: возможно, лучше параметром выделить Cell и перемести в родительский класс. искать equals
 	@Override
 	public Cell getCell(Cell cell) {
@@ -179,5 +128,57 @@ public class Map extends BaseMap {
 	@Override
 	public int getIndexWinner() {
 		return this.mGoals.indexOf(this.mCurrent);
+	}
+
+	@Override
+	public void recreate() {
+		this.mCells = new Vector<Cell>(Map.CELLS_COUNT);
+		this.mLinks = new Vector<Link>();
+		this.mGoals = new Vector<Cell>();
+
+		for (int x = Map.INDEX_WIDTH_MIN; x < Map.CELLS_COL_COUNT; x++) {
+			for (int y = Map.INDEX_HEIGHT_MIN; y < Map.CELLS_ROW_COUNT; y++) {
+				this.mCells.add(new Cell(x, y));
+			}
+		}
+
+		for (int x = Map.INDEX_WIDTH_MIN; x < Map.INDEX_WIDTH_MAX; x++) {
+			Cell a0 = this.getCell(new Cell(x, Map.INDEX_HEIGHT_MIN));
+			Cell b0 = this.getCell(new Cell(x + 1, Map.INDEX_HEIGHT_MIN));
+			Cell a = this.getCell(new Cell(x, Map.INDEX_HEIGHT_MAX));
+			Cell b = this.getCell(new Cell(x + 1, Map.INDEX_HEIGHT_MAX));
+
+			this.mLinks.add(new Link(a0, b0));
+			this.mLinks.add(new Link(a, b));
+		}
+
+		this.mCurrent = this.getCell(new Cell(Map.INDEX_WIDTH_CENTER, Map.INDEX_HEIGHT_CENTER));
+
+		for (int y = Map.INDEX_HEIGHT_MIN; y < Map.INDEX_HEIGHT_MAX; y++) {
+
+			if ((y < Map.INDEX_HEIGHT_CENTER - Map.GOAL_LINE_OFFSET) ||
+					(y >= Map.INDEX_HEIGHT_CENTER + Map.GOAL_LINE_OFFSET)) {
+				Cell a0 = this.getCell(new Cell(Map.INDEX_WIDTH_MIN, y));
+				Cell b0 = this.getCell(new Cell(Map.INDEX_WIDTH_MIN, y + 1));
+				Cell a1 = this.getCell(new Cell(Map.INDEX_WIDTH_MAX, y));
+				Cell b1 = this.getCell(new Cell(Map.INDEX_WIDTH_MAX, y + 1));
+
+				this.mLinks.add(new Link(a0, b0));
+				this.mLinks.add(new Link(a1, b1));
+			}
+
+			Cell a2 = this.getCell(new Cell(Map.INDEX_WIDTH_CENTER - Map.FRONT_LINE_OFFSET, y));
+			Cell b2 = this.getCell(new Cell(Map.INDEX_WIDTH_CENTER - Map.FRONT_LINE_OFFSET, y + 1));
+			Cell a3 = this.getCell(new Cell(Map.INDEX_WIDTH_CENTER, y));
+			Cell b3 = this.getCell(new Cell(Map.INDEX_WIDTH_CENTER, y + 1));
+			Cell a4 = this.getCell(new Cell(Map.INDEX_WIDTH_CENTER + Map.FRONT_LINE_OFFSET, y));
+			Cell b4 = this.getCell(new Cell(Map.INDEX_WIDTH_CENTER + Map.FRONT_LINE_OFFSET, y + 1));
+
+			this.mLinks.add(new Link(a2, b2));
+			this.mLinks.add(new Link(a3, b3));
+			this.mLinks.add(new Link(a4, b4));
+		}
+		this.mGoals.add(this.getCell(new Cell(Map.INDEX_WIDTH_MAX, Map.INDEX_HEIGHT_CENTER)));
+		this.mGoals.add(this.getCell(new Cell(Map.INDEX_WIDTH_MIN, Map.INDEX_HEIGHT_CENTER)));
 	}
 }

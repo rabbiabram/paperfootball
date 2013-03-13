@@ -143,7 +143,7 @@ public class MapController extends BaseMapController {
 	}
 
 	protected float calculateWidthCell(int width, int height) {
-		return Math.min(height / Map.CELLS_ROW_COUNT, width / Map.CELLS_COL_COUNT);
+		return Math.min(height / (Map.CELLS_ROW_COUNT - 1), width / (Map.CELLS_COL_COUNT - 1));
 	}
 
 	@Override

@@ -14,4 +14,5 @@ import com.rnr.paperfootball.base.BaseMap;
 
 public interface PathGetter {
 	Vector<Cell> getPath(BaseMap gameMap) throws InterruptedException;
+	void stop(BaseMap gameMap);
 }

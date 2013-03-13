@@ -14,10 +14,12 @@ public abstract class BaseMap {
 	public abstract int getMinPlayersCount();
 	public abstract int getIndexWinner();
 
+	public abstract void recreate();
 	public boolean validate(Vector<Cell> path) {
 		return this.validate(path, false);
 	}
 
 	public BaseMap() {
+		this.recreate();
 	}
 }

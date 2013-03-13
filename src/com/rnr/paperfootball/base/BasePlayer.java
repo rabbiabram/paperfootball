@@ -53,5 +53,6 @@ public abstract class BasePlayer {
 	 * @throws InterruptedException
 	 */
 	public abstract Vector<Cell> Turn(BaseMap gameMap) throws InterruptedException;
+	public abstract void stopTurn(BaseMap gameMap);
 
 }

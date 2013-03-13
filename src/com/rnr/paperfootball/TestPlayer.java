@@ -22,4 +22,8 @@ public class TestPlayer extends BasePlayer {
 		return path;
 	}
 
+	@Override
+	public void stopTurn(BaseMap gameMap) {
+	}
+
 }

@@ -6,5 +6,6 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_game_field">GameField</string>
     <string name="game_field">Game Field</string>
+    <string name="new_game">Новая игра</string>
 
 </resources>

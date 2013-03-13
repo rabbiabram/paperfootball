@@ -39,4 +39,11 @@ public class LocalPlayer extends BasePlayer {
 		return this.mPathGetter.getPath(gameMap);
 	}
 
+	@Override
+	public void stopTurn(BaseMap gameMap) {
+		if (this.mPathGetter != null) {
+			this.mPathGetter.stop(gameMap);
+		}
+	}
+
 }
