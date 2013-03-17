@@ -75,7 +75,7 @@ public class Game extends Thread {
 
 
 	public void addPlayer(BasePlayer player) {
-		if (!this.isStart) {
+		if (!this.isStart && (player != null)) {
 			this.mPlayers.add(player);
 		}
 	}

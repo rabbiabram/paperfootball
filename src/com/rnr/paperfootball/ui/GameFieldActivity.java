@@ -1,19 +1,21 @@
 package com.rnr.paperfootball.ui;
 
-import com.rnr.paperfootball.LocalPlayer;
-import com.rnr.paperfootball.LocalPlayerController;
-import com.rnr.paperfootball.R;
-import com.rnr.paperfootball.base.BaseMapBuilder;
-import com.rnr.paperfootball.core.Game;
-import com.rnr.paperfootball.core.InsufficientPlayersException;
-import com.rnr.paperfootball.map.MapBuilder;
-
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+
+import com.rnr.paperfootball.Config;
+import com.rnr.paperfootball.LocalPlayerController;
+import com.rnr.paperfootball.R;
+import com.rnr.paperfootball.base.BaseMapBuilder;
+import com.rnr.paperfootball.core.Game;
+import com.rnr.paperfootball.core.InsufficientPlayersException;
+import com.rnr.paperfootball.core.PlayerBuilder;
+import com.rnr.paperfootball.map.MapBuilder;
+import com.rnr.paperfootball.map.MapBuilderFactory;
 
 public class GameFieldActivity extends Activity {
 
@@ -34,7 +36,7 @@ public class GameFieldActivity extends Activity {
         
         
         if (oldState == null) {
-	        this.mGameBuilder = new MapBuilder();
+	        this.mGameBuilder = MapBuilderFactory.createInstance(this.getIntent().getStringExtra(Config.MAP_TYPE));
 	        this.mGame = new Game(this.mGameBuilder.createMap());
 	
 	        this.mGameFieldView = new GameFieldView(this);
@@ -46,8 +48,13 @@ public class GameFieldActivity extends Activity {
 	
 	        this.mGameFieldView.addHandler(playerController);
 	
-	        this.mGame.addPlayer(new LocalPlayer("Player 1", Color.RED, playerController));
-	        this.mGame.addPlayer(new LocalPlayer("Player 2", Color.GREEN, playerController));
+            
+            this.mGame.addPlayer(PlayerBuilder.createInstance(this.getIntent().getStringExtra(Config.P1_TYPE), 
+	        		this.getIntent().getStringExtra(Config.P1_NAME), 
+	        		this.getIntent().getIntExtra(Config.P1_COLOR, Color.RED), playerController));
+	        this.mGame.addPlayer(PlayerBuilder.createInstance(this.getIntent().getStringExtra(Config.P2_TYPE), 
+	        		this.getIntent().getStringExtra(Config.P2_NAME), 
+	        		this.getIntent().getIntExtra(Config.P2_COLOR, Color.RED), playerController));
 	
 	        this.setContentView(this.mGameFieldView);
 	        this.mGameFieldView.requestFocus();
@@ -75,7 +82,7 @@ public class GameFieldActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) 
 	{
 		switch (item.getItemId()) {
-		case R.id.new_game:
+		case R.id.new_match:
 			this.mGame.startNew();
 			return true;
 		default:

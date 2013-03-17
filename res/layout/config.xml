@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <Spinner
+        android:id="@+id/sMapType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Spinner
+            android:id="@+id/sPlayer1Type"
+            android:layout_width="68dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.98" />
+
+        <EditText
+            android:id="@+id/ePlayer1Name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="@string/config_playerName"
+            android:inputType="text"
+            android:maxLines="@integer/config_maxLinePlayerName" >
+
+            <requestFocus />
+        </EditText>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Spinner
+            android:id="@+id/sPlayer2Type"
+            android:layout_width="68dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.98" />
+
+        <EditText
+            android:id="@+id/ePlayer2Name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="@string/config_playerName"
+            android:inputType="text"
+            android:maxLines="@integer/config_maxLinePlayerName" />
+    </LinearLayout>
+
+</LinearLayout>

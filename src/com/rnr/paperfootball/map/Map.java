@@ -7,27 +7,30 @@ import com.rnr.paperfootball.core.Cell;
 import com.rnr.paperfootball.core.Link;
 
 public class Map extends BaseMap {
-	Vector<Cell> mCells;
-	Vector<Link> mLinks;
-	Cell mCurrent;
-	private Vector<Cell> mGoals;
+	protected Vector<Cell> mCells;
+	protected Vector<Link> mLinks;
+	protected Cell mCurrent;
+	protected Vector<Cell> mGoals;
 
 	@Override
 	public Cell getCurrent() {
 		return this.mCurrent;
 	}
 
-	public static final int CELLS_COUNT = 99;
-	public static final int CELLS_COL_COUNT = 11;
-	public static final int CELLS_ROW_COUNT = 9;
-	public static final int INDEX_WIDTH_MIN = 0;
-	public static final int INDEX_WIDTH_MAX = 10;
-	public static final int INDEX_WIDTH_CENTER = (INDEX_WIDTH_MAX - INDEX_WIDTH_MIN) / 2;
-	public static final int INDEX_HEIGHT_MIN = 0;
-	public static final int INDEX_HEIGHT_MAX = 8;
-	public static final int INDEX_HEIGHT_CENTER = (INDEX_HEIGHT_MAX - INDEX_HEIGHT_MIN) / 2;
-	public static final int FRONT_LINE_OFFSET = 2;
-	public static final int GOAL_LINE_OFFSET = 1;
+	public static int CELLS_COL_COUNT = 11;
+	public static int CELLS_ROW_COUNT = 9;
+	
+	public static int INDEX_WIDTH_MIN = 0;
+	public static int INDEX_HEIGHT_MIN = 0;
+
+	public static int INDEX_WIDTH_MAX = CELLS_COL_COUNT - INDEX_WIDTH_MIN - 1;
+	public static int INDEX_HEIGHT_MAX = CELLS_ROW_COUNT - INDEX_HEIGHT_MIN - 1;
+	public static int CELLS_COUNT = CELLS_COL_COUNT * CELLS_ROW_COUNT;
+	public static int INDEX_WIDTH_CENTER = (INDEX_WIDTH_MAX - INDEX_WIDTH_MIN) / 2;
+	public static int INDEX_HEIGHT_CENTER = (INDEX_HEIGHT_MAX - INDEX_HEIGHT_MIN) / 2;
+
+	public static int FRONT_LINE_OFFSET = 2;
+	public static int GOAL_LINE_OFFSET = 1;
 
 	// TODO: возможно, лучше параметром выделить Cell и перемести в родительский класс. искать equals
 	@Override

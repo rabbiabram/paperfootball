@@ -3,11 +3,7 @@
  */
 package com.rnr.paperfootball;
 
-import java.util.Vector;
-
-import com.rnr.paperfootball.base.BaseMap;
 import com.rnr.paperfootball.base.BasePlayer;
-import com.rnr.paperfootball.core.Cell;
 import com.rnr.paperfootball.core.PathGetter;
 
 /**
@@ -15,35 +11,8 @@ import com.rnr.paperfootball.core.PathGetter;
  *
  */
 public class LocalPlayer extends BasePlayer {
-	PathGetter mPathGetter;
 
 	public LocalPlayer(String name, int color, PathGetter pathGetter) {
-		super(name, color);
-		this.mPathGetter = pathGetter;
+		super(name, color, pathGetter);
 	}
-
-	public PathGetter getPathGetter() {
-		return this.mPathGetter;
-	}
-
-	public void setPathGetter(PathGetter pathGetter) {
-		this.mPathGetter = pathGetter;
-	}
-
-	@Override
-	public Vector<Cell> Turn(BaseMap gameMap) throws InterruptedException {
-		if (this.mPathGetter == null) {
-			return null;
-		}
-
-		return this.mPathGetter.getPath(gameMap);
-	}
-
-	@Override
-	public void stopTurn(BaseMap gameMap) {
-		if (this.mPathGetter != null) {
-			this.mPathGetter.stop(gameMap);
-		}
-	}
-
 }

@@ -5,11 +5,12 @@ import java.util.Vector;
 import com.rnr.paperfootball.base.BaseMap;
 import com.rnr.paperfootball.base.BasePlayer;
 import com.rnr.paperfootball.core.Cell;
+import com.rnr.paperfootball.core.PathGetter;
 
 public class TestPlayer extends BasePlayer {
 
-	public TestPlayer(String name, int color) {
-		super(name, color);
+	public TestPlayer(String name, int color, PathGetter pathGetter) {
+		super(name, color, pathGetter);
 	}
 
 	@Override

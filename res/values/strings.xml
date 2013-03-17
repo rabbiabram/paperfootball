@@ -7,5 +7,11 @@
     <string name="title_activity_game_field">GameField</string>
     <string name="game_field">Game Field</string>
     <string name="new_game">Новая игра</string>
+    <string name="new_match">Начать партию</string>
+    <string name="view_config">Настройки</string>
+    <string name="exit">Выход</string>
+    <string name="config_playerName">Имя игрока</string>
+    <string name="config_save">Сохранить</string>
+    <string name="config_close">Закрыть</string>
 
 </resources>
