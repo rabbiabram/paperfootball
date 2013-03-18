@@ -6,6 +6,7 @@ package com.rnr.paperfootball.map;
 import java.util.Vector;
 
 import com.rnr.paperfootball.base.BaseMapController;
+import com.rnr.paperfootball.base.BasePlayer;
 import com.rnr.paperfootball.core.Cell;
 import com.rnr.paperfootball.core.Game;
 
@@ -70,19 +71,19 @@ public class MapController extends BaseMapController {
 		pEmptyLine.setColor(Color.GRAY);
 		pEmptyLine.setStrokeWidth(1);
 
-		int indexWinner = this.mGameMap.getIndexWinner();
+		BasePlayer winner = this.mGame.getWinner();
 		
-		if (indexWinner == -1) {
+		if (winner == null) {
 			pLine.setColor(Color.WHITE);
 		} else {
-			pLine.setColor(this.mGame.getPlayers().get(indexWinner).getColor());
+			pLine.setColor(winner.getColor());
 		}
 		pLine.setStrokeWidth(3);
 		
 		// Рисуем сетку
 		// Рисуем от каждой точки справа и снизу
-		for (int y = Map.INDEX_HEIGHT_MIN; y < Map.INDEX_HEIGHT_MAX; y++) {
-			for (int x = Map.INDEX_WIDTH_MIN; x < Map.INDEX_WIDTH_MAX; x++) {
+		for (int y = this.mGameMap.INDEX_HEIGHT_MIN(); y < this.mGameMap.INDEX_HEIGHT_MAX(); y++) {
+			for (int x = this.mGameMap.INDEX_WIDTH_MIN(); x < this.mGameMap.INDEX_WIDTH_MAX(); x++) {
 				Cell cellA = this.mGameMap.getCell(new Cell(x, y));
 				Cell cellAX = this.mGameMap.getCell(new Cell(x + 1, y));
 				Cell cellAY = this.mGameMap.getCell(new Cell(x, y + 1));
@@ -99,16 +100,16 @@ public class MapController extends BaseMapController {
 			}
 		}
 		// Крайние линии справа
-		for (int y = Map.INDEX_HEIGHT_MIN; y < Map.INDEX_HEIGHT_MAX; y++) {
-			int x = Map.INDEX_WIDTH_MAX;
+		for (int y = this.mGameMap.INDEX_HEIGHT_MIN(); y < this.mGameMap.INDEX_HEIGHT_MAX(); y++) {
+			int x = this.mGameMap.INDEX_WIDTH_MAX();
 			Cell cellA = this.mGameMap.getCell(new Cell(x, y));
 			Cell cellB = this.mGameMap.getCell(new Cell(x, y + 1));
 
 			this.paintLine(canvas, cellA, cellB, pLine, pEmptyLine);
 		}
 		// Крайние линии снизу
-		for (int x = Map.INDEX_WIDTH_MIN; x < Map.INDEX_WIDTH_MAX; x++) {
-			int y = Map.INDEX_HEIGHT_MAX;
+		for (int x = this.mGameMap.INDEX_WIDTH_MIN(); x < this.mGameMap.INDEX_WIDTH_MAX(); x++) {
+			int y = this.mGameMap.INDEX_HEIGHT_MAX();
 			Cell cellA = this.mGameMap.getCell(new Cell(x, y));
 			Cell cellB = this.mGameMap.getCell(new Cell(x + 1, y));
 
@@ -145,10 +146,28 @@ public class MapController extends BaseMapController {
 		pBall.setColor(this.mGame.getCurrentPlayer().getColor());
 
 		canvas.drawCircle(currentCell.getX() * this.mWidthCell, currentCell.getY() * this.mWidthCell, 3, pBall);
-	}
+		// Рисуем ворота
+		Paint pGoal = new Paint();
+		pGoal.setColor(Color.WHITE);
+		pGoal.setStrokeWidth(3);
+		Cell a = this.mGameMap.getCell(new Cell(this.mGameMap.INDEX_WIDTH_MIN(), this.mGameMap.INDEX_HEIGHT_CENTER() - this.mGameMap.GOAL_LINE_OFFSET));
+		Cell b = this.mGameMap.getCell(new Cell(this.mGameMap.INDEX_WIDTH_MAX(), this.mGameMap.INDEX_HEIGHT_CENTER() - this.mGameMap.GOAL_LINE_OFFSET));
+		Cell c = this.mGameMap.getCell(new Cell(this.mGameMap.INDEX_WIDTH_MIN(), this.mGameMap.INDEX_HEIGHT_CENTER() + this.mGameMap.GOAL_LINE_OFFSET));
+		Cell d = this.mGameMap.getCell(new Cell(this.mGameMap.INDEX_WIDTH_MAX(), this.mGameMap.INDEX_HEIGHT_CENTER() + this.mGameMap.GOAL_LINE_OFFSET));
+
+		float fieldGoal = 4;
+		canvas.drawLine(a.getX() * this.mWidthCell, a.getY() * this.mWidthCell, 
+				a.getX() * this.mWidthCell + fieldGoal, a.getY() * this.mWidthCell, pGoal);
+		canvas.drawLine(b.getX() * this.mWidthCell, b.getY() * this.mWidthCell, 
+				b.getX() * this.mWidthCell - fieldGoal, b.getY() * this.mWidthCell, pGoal);
+		canvas.drawLine(c.getX() * this.mWidthCell, c.getY() * this.mWidthCell, 
+				c.getX() * this.mWidthCell + fieldGoal, c.getY() * this.mWidthCell, pGoal);
+		canvas.drawLine(d.getX() * this.mWidthCell, d.getY() * this.mWidthCell, 
+				d.getX() * this.mWidthCell - fieldGoal, d.getY() * this.mWidthCell, pGoal);
+	}	
 
 	protected float calculateWidthCell(int width, int height) {
-		return Math.min(height / (Map.CELLS_ROW_COUNT - 1), width / (Map.CELLS_COL_COUNT - 1));
+		return Math.min(height / (this.mGameMap.CELLS_ROW_COUNT() - 1), width / (this.mGameMap.CELLS_COL_COUNT() - 1));
 	}
 
 	@Override
@@ -169,7 +188,7 @@ public class MapController extends BaseMapController {
 	@Override
 	public Rect getRect(int width, int height) {
 		float sizeCell = this.calculateWidthCell(width, height);
-		return new Rect(0, 0, Math.round(sizeCell * (Map.CELLS_COL_COUNT - 1)), 
-				Math.round(sizeCell * (Map.CELLS_ROW_COUNT - 1)));
+		return new Rect(0, 0, Math.round(sizeCell * (this.mGameMap.CELLS_COL_COUNT() - 1)), 
+				Math.round(sizeCell * (this.mGameMap.CELLS_ROW_COUNT() - 1)));
 	}
 }

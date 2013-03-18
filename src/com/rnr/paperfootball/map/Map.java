@@ -17,20 +17,38 @@ public class Map extends BaseMap {
 		return this.mCurrent;
 	}
 
-	public static int CELLS_COL_COUNT = 11;
-	public static int CELLS_ROW_COUNT = 9;
+	public int CELLS_COL_COUNT() {
+		return 11;
+	}
+	public int CELLS_ROW_COUNT() {
+		return 9;
+	}
 	
-	public static int INDEX_WIDTH_MIN = 0;
-	public static int INDEX_HEIGHT_MIN = 0;
+	public int INDEX_WIDTH_MIN() {
+		return 0;
+	}
+	public int INDEX_HEIGHT_MIN() { 
+		return 0;
+	}
 
-	public static int INDEX_WIDTH_MAX = CELLS_COL_COUNT - INDEX_WIDTH_MIN - 1;
-	public static int INDEX_HEIGHT_MAX = CELLS_ROW_COUNT - INDEX_HEIGHT_MIN - 1;
-	public static int CELLS_COUNT = CELLS_COL_COUNT * CELLS_ROW_COUNT;
-	public static int INDEX_WIDTH_CENTER = (INDEX_WIDTH_MAX - INDEX_WIDTH_MIN) / 2;
-	public static int INDEX_HEIGHT_CENTER = (INDEX_HEIGHT_MAX - INDEX_HEIGHT_MIN) / 2;
+	public int INDEX_WIDTH_MAX() {
+		return CELLS_COL_COUNT() - INDEX_WIDTH_MIN() - 1;
+	}
+	public int INDEX_HEIGHT_MAX() {
+		return CELLS_ROW_COUNT() - INDEX_HEIGHT_MIN() - 1;
+	}
+	public int CELLS_COUNT() {
+		return CELLS_COL_COUNT() * CELLS_ROW_COUNT();
+	}
+	public int INDEX_WIDTH_CENTER() {
+		return (INDEX_WIDTH_MAX() - INDEX_WIDTH_MIN()) / 2;
+	}
+	public int INDEX_HEIGHT_CENTER() {
+		return (INDEX_HEIGHT_MAX() - INDEX_HEIGHT_MIN()) / 2;
+	}
 
-	public static int FRONT_LINE_OFFSET = 2;
-	public static int GOAL_LINE_OFFSET = 1;
+	public int FRONT_LINE_OFFSET = 2;
+	public int GOAL_LINE_OFFSET = 1;
 
 	// TODO: возможно, лучше параметром выделить Cell и перемести в родительский класс. искать equals
 	@Override
@@ -91,10 +109,63 @@ public class Map extends BaseMap {
 			}
 		}
 		// Если путь полный, то последняя точка должна быть новая или точка гола или тупик.
-		return partial || (this.mGoals.indexOf(innerPath.lastElement()) != -1) || 
-				!this.isLinked(innerPath.lastElement());
+		return partial || !this.isLinked(innerPath.lastElement()) || 
+				(this.mGoals.indexOf(innerPath.lastElement()) != -1) || 
+				(this.isStalemate(innerPath));
 	}
 
+	private int getMaxCountLink(Cell cell) {
+		int maxCountLink = 8;
+		int x = cell.getX();
+		int y = cell.getY();
+		
+		
+		if ((x == this.INDEX_WIDTH_MIN()) || (x == this.INDEX_WIDTH_MAX())) {
+			maxCountLink -= 3;
+		}
+		
+		if ((y == this.INDEX_HEIGHT_MIN()) || (y == this.INDEX_HEIGHT_MAX())) {
+			maxCountLink -= 3;
+		}
+		
+		if (maxCountLink == 2) {
+			++maxCountLink;
+		}
+		
+		return maxCountLink;
+	}
+	public boolean isStalemate(Cell cell) {
+		return this.getLinkedCell(cell).size() == this.getMaxCountLink(cell);
+	}
+	private boolean isStalemate(Vector<Cell> innerPath) {
+		Cell finish = innerPath.lastElement();
+
+		int countLinkPath = 1;
+		
+		if (innerPath.firstElement().equals(finish)) {
+			++countLinkPath;
+		}
+		
+		for (int ind = 1; ind < innerPath.size() - 1; ind++) {
+			if (innerPath.get(ind).equals(finish)) {
+				countLinkPath += 2;
+			}
+		}
+		int countLink = this.getLinkedCell(finish).size() + countLinkPath;
+		return countLink == this.getMaxCountLink(finish);
+	}
+
+	private Vector<Cell> getLinkedCell(Cell cell) {
+		Vector<Cell> linkedCells = new Vector<Cell>();
+		for (Link link : this.mLinks) {
+			if (cell.equals(link.getA())) {
+				linkedCells.add(link.getB());
+			} else if (cell.equals(link.getB())) {
+				linkedCells.add(link.getA());
+			}
+		}
+		return linkedCells;
+	}
 	private boolean isLinked(Cell a) {
 		for (Link link : this.mLinks) {
 			if (a.equals(link.getA()) ||
@@ -136,53 +207,53 @@ public class Map extends BaseMap {
 
 	@Override
 	public void recreate() {
-		this.mCells = new Vector<Cell>(Map.CELLS_COUNT);
+		this.mCells = new Vector<Cell>(this.CELLS_COUNT());
 		this.mLinks = new Vector<Link>();
 		this.mGoals = new Vector<Cell>();
 
-		for (int x = Map.INDEX_WIDTH_MIN; x < Map.CELLS_COL_COUNT; x++) {
-			for (int y = Map.INDEX_HEIGHT_MIN; y < Map.CELLS_ROW_COUNT; y++) {
+		for (int x = this.INDEX_WIDTH_MIN(); x < this.CELLS_COL_COUNT(); x++) {
+			for (int y = this.INDEX_HEIGHT_MIN(); y < this.CELLS_ROW_COUNT(); y++) {
 				this.mCells.add(new Cell(x, y));
 			}
 		}
 
-		for (int x = Map.INDEX_WIDTH_MIN; x < Map.INDEX_WIDTH_MAX; x++) {
-			Cell a0 = this.getCell(new Cell(x, Map.INDEX_HEIGHT_MIN));
-			Cell b0 = this.getCell(new Cell(x + 1, Map.INDEX_HEIGHT_MIN));
-			Cell a = this.getCell(new Cell(x, Map.INDEX_HEIGHT_MAX));
-			Cell b = this.getCell(new Cell(x + 1, Map.INDEX_HEIGHT_MAX));
+		for (int x = this.INDEX_WIDTH_MIN(); x < this.INDEX_WIDTH_MAX(); x++) {
+			Cell a0 = this.getCell(new Cell(x, this.INDEX_HEIGHT_MIN()));
+			Cell b0 = this.getCell(new Cell(x + 1, this.INDEX_HEIGHT_MIN()));
+			Cell a = this.getCell(new Cell(x, this.INDEX_HEIGHT_MAX()));
+			Cell b = this.getCell(new Cell(x + 1, this.INDEX_HEIGHT_MAX()));
 
 			this.mLinks.add(new Link(a0, b0));
 			this.mLinks.add(new Link(a, b));
 		}
 
-		this.mCurrent = this.getCell(new Cell(Map.INDEX_WIDTH_CENTER, Map.INDEX_HEIGHT_CENTER));
+		this.mCurrent = this.getCell(new Cell(this.INDEX_WIDTH_CENTER(), this.INDEX_HEIGHT_CENTER()));
 
-		for (int y = Map.INDEX_HEIGHT_MIN; y < Map.INDEX_HEIGHT_MAX; y++) {
+		for (int y = this.INDEX_HEIGHT_MIN(); y < this.INDEX_HEIGHT_MAX(); y++) {
 
-			if ((y < Map.INDEX_HEIGHT_CENTER - Map.GOAL_LINE_OFFSET) ||
-					(y >= Map.INDEX_HEIGHT_CENTER + Map.GOAL_LINE_OFFSET)) {
-				Cell a0 = this.getCell(new Cell(Map.INDEX_WIDTH_MIN, y));
-				Cell b0 = this.getCell(new Cell(Map.INDEX_WIDTH_MIN, y + 1));
-				Cell a1 = this.getCell(new Cell(Map.INDEX_WIDTH_MAX, y));
-				Cell b1 = this.getCell(new Cell(Map.INDEX_WIDTH_MAX, y + 1));
+			if ((y < this.INDEX_HEIGHT_CENTER() - this.GOAL_LINE_OFFSET) ||
+					(y >= this.INDEX_HEIGHT_CENTER() + this.GOAL_LINE_OFFSET)) {
+				Cell a0 = this.getCell(new Cell(this.INDEX_WIDTH_MIN(), y));
+				Cell b0 = this.getCell(new Cell(this.INDEX_WIDTH_MIN(), y + 1));
+				Cell a1 = this.getCell(new Cell(this.INDEX_WIDTH_MAX(), y));
+				Cell b1 = this.getCell(new Cell(this.INDEX_WIDTH_MAX(), y + 1));
 
 				this.mLinks.add(new Link(a0, b0));
 				this.mLinks.add(new Link(a1, b1));
 			}
 
-			Cell a2 = this.getCell(new Cell(Map.INDEX_WIDTH_CENTER - Map.FRONT_LINE_OFFSET, y));
-			Cell b2 = this.getCell(new Cell(Map.INDEX_WIDTH_CENTER - Map.FRONT_LINE_OFFSET, y + 1));
-			Cell a3 = this.getCell(new Cell(Map.INDEX_WIDTH_CENTER, y));
-			Cell b3 = this.getCell(new Cell(Map.INDEX_WIDTH_CENTER, y + 1));
-			Cell a4 = this.getCell(new Cell(Map.INDEX_WIDTH_CENTER + Map.FRONT_LINE_OFFSET, y));
-			Cell b4 = this.getCell(new Cell(Map.INDEX_WIDTH_CENTER + Map.FRONT_LINE_OFFSET, y + 1));
+			Cell a2 = this.getCell(new Cell(this.INDEX_WIDTH_CENTER() - this.FRONT_LINE_OFFSET, y));
+			Cell b2 = this.getCell(new Cell(this.INDEX_WIDTH_CENTER() - this.FRONT_LINE_OFFSET, y + 1));
+			Cell a3 = this.getCell(new Cell(this.INDEX_WIDTH_CENTER(), y));
+			Cell b3 = this.getCell(new Cell(this.INDEX_WIDTH_CENTER(), y + 1));
+			Cell a4 = this.getCell(new Cell(this.INDEX_WIDTH_CENTER() + this.FRONT_LINE_OFFSET, y));
+			Cell b4 = this.getCell(new Cell(this.INDEX_WIDTH_CENTER() + this.FRONT_LINE_OFFSET, y + 1));
 
 			this.mLinks.add(new Link(a2, b2));
 			this.mLinks.add(new Link(a3, b3));
 			this.mLinks.add(new Link(a4, b4));
 		}
-		this.mGoals.add(this.getCell(new Cell(Map.INDEX_WIDTH_MAX, Map.INDEX_HEIGHT_CENTER)));
-		this.mGoals.add(this.getCell(new Cell(Map.INDEX_WIDTH_MIN, Map.INDEX_HEIGHT_CENTER)));
+		this.mGoals.add(this.getCell(new Cell(this.INDEX_WIDTH_MAX(), this.INDEX_HEIGHT_CENTER())));
+		this.mGoals.add(this.getCell(new Cell(this.INDEX_WIDTH_MIN(), this.INDEX_HEIGHT_CENTER())));
 	}
 }

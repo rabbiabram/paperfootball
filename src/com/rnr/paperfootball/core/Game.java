@@ -118,7 +118,6 @@ public class Game extends Thread {
 		
 
 		this.mTurnCount = 0;
-		this.sendRepaint();
 		
 		if (this.mIsFinished) {
 			synchronized (this) {
@@ -130,6 +129,12 @@ public class Game extends Thread {
 
 	}
 	
+	public BasePlayer getWinner() {
+		if (this.mIsFinished) {
+			return this.mCurrentPlayer;
+		}
+		return null;
+	}
 	public void run() {
 		super.run();
 		 try {
@@ -155,10 +160,16 @@ public class Game extends Thread {
 					continue;
 				}
 				int indexWinner = this.mGameMap.getIndexWinner();
+
+				if ((indexWinner == -1) &&
+						this.mGameMap.isStalemate(this.mGameMap.getCurrent())) {
+					this.mCurrentPlayer = this.getNextPlayer();					
+					indexWinner = this.getPlayers().indexOf(this.mCurrentPlayer);
+				}
 				if (indexWinner != -1) {
-					this.sendEndOfGame(indexWinner);
-					this.mIsFinished = true;
 					this.mCurrentPlayer = this.getPlayers().get(indexWinner);
+					this.mIsFinished = true;
+					this.sendEndOfGame(indexWinner);
 					synchronized (this) {
 						while (this.mIsFinished) {
 							Log.d("paper.thread", "Stopped");

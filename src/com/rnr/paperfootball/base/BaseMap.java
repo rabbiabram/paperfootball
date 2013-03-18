@@ -13,7 +13,7 @@ public abstract class BaseMap {
 	public abstract Cell getCell(Cell cell);
 	public abstract int getMinPlayersCount();
 	public abstract int getIndexWinner();
-
+	public abstract boolean isStalemate(Cell cell);
 	public abstract void recreate();
 	public boolean validate(Vector<Cell> path) {
 		return this.validate(path, false);
