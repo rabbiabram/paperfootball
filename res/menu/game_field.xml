@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
     <item android:id="@+id/new_match" android:title="@string/new_match"></item>
-    <item android:id="@+id/turn_undo" android:title="Отменить ход" android:enabled="true"></item>
+    <item android:id="@+id/turn_undo" android:title="@string/undo_turn" android:enabled="true"></item>
     
 
 </menu>

@@ -2,8 +2,6 @@ package com.rnr.paperfootball.core;
 
 import java.util.LinkedHashMap;
 
-import android.util.Log;
-
 import com.rnr.paperfootball.LocalPlayer;
 import com.rnr.paperfootball.TestPlayer;
 import com.rnr.paperfootball.base.BasePlayer;

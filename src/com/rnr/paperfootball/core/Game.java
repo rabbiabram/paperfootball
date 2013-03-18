@@ -21,7 +21,7 @@ public class Game extends Thread {
 
 	protected Vector<GameCallback> mHandlers;
 	private boolean mIsFinished;
-
+	
 	public BasePlayer getCurrentPlayer() {
 		return this.mCurrentPlayer;
 	}
@@ -111,9 +111,9 @@ public class Game extends Thread {
 			this.mCurrentPlayer.stopTurn(this.mGameMap);
 			this.mCurrentPlayer = this.getNextPlayer();
 			this.sendEndOfGame(this.mPlayers.indexOf(this.mCurrentPlayer));
-			this.mCurrentPlayer = this.getNextPlayer();
 		}
 
+		this.mCurrentPlayer = this.getNextPlayer();
 		this.mGameMap.recreate();
 		
 
@@ -159,7 +159,6 @@ public class Game extends Thread {
 					this.sendEndOfGame(indexWinner);
 					this.mIsFinished = true;
 					this.mCurrentPlayer = this.getPlayers().get(indexWinner);
-					this.mCurrentPlayer = this.getNextPlayer();
 					synchronized (this) {
 						while (this.mIsFinished) {
 							Log.d("paper.thread", "Stopped");

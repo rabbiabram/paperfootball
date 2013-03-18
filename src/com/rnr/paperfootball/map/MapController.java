@@ -67,13 +67,18 @@ public class MapController extends BaseMapController {
 
 		Paint pEmptyLine = new Paint();
 		Paint pLine = new Paint();
-
 		pEmptyLine.setColor(Color.GRAY);
 		pEmptyLine.setStrokeWidth(1);
 
-		pLine.setColor(Color.WHITE);
+		int indexWinner = this.mGameMap.getIndexWinner();
+		
+		if (indexWinner == -1) {
+			pLine.setColor(Color.WHITE);
+		} else {
+			pLine.setColor(this.mGame.getPlayers().get(indexWinner).getColor());
+		}
 		pLine.setStrokeWidth(3);
-
+		
 		// Рисуем сетку
 		// Рисуем от каждой точки справа и снизу
 		for (int y = Map.INDEX_HEIGHT_MIN; y < Map.INDEX_HEIGHT_MAX; y++) {

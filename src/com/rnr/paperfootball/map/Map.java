@@ -90,8 +90,9 @@ public class Map extends BaseMap {
 				return false;
 			}
 		}
-		// Если путь полный, то последняя точка должна быть новая
-		return partial || !this.isLinked(innerPath.lastElement());
+		// Если путь полный, то последняя точка должна быть новая или точка гола или тупик.
+		return partial || (this.mGoals.indexOf(innerPath.lastElement()) != -1) || 
+				!this.isLinked(innerPath.lastElement());
 	}
 
 	private boolean isLinked(Cell a) {

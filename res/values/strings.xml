@@ -13,5 +13,6 @@
     <string name="config_playerName">Имя игрока</string>
     <string name="config_save">Сохранить</string>
     <string name="config_close">Закрыть</string>
+    <string name="undo_turn">Отменить ход</string>
 
 </resources>

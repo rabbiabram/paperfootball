@@ -14,7 +14,6 @@ import com.rnr.paperfootball.base.BaseMapBuilder;
 import com.rnr.paperfootball.core.Game;
 import com.rnr.paperfootball.core.InsufficientPlayersException;
 import com.rnr.paperfootball.core.PlayerBuilder;
-import com.rnr.paperfootball.map.MapBuilder;
 import com.rnr.paperfootball.map.MapBuilderFactory;
 
 public class GameFieldActivity extends Activity {

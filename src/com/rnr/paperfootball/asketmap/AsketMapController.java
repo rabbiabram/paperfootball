@@ -32,7 +32,13 @@ public class AsketMapController extends MapController {
 		pEmptyLine.setColor(Color.GRAY);
 		pEmptyLine.setStrokeWidth(1);
 
-		pLine.setColor(Color.WHITE);
+		int indexWinner = this.mGameMap.getIndexWinner();
+		
+		if (indexWinner == -1) {
+			pLine.setColor(Color.WHITE);
+		} else {
+			pLine.setColor(this.mGame.getPlayers().get(indexWinner).getColor());
+		}
 		pLine.setStrokeWidth(3);
 
 		// Рисуем сетку

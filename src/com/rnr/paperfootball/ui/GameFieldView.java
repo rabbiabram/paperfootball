@@ -49,6 +49,7 @@ public class GameFieldView extends SurfaceView implements SurfaceHolder.Callback
 		this.mTouchHandler.remove(handler);
 	}
 
+	@SuppressWarnings("unused")
 	private int setTextSize(Paint paint, String str, float maxWidth)
 	{
 	    int size = 0;       
@@ -206,6 +207,7 @@ public class GameFieldView extends SurfaceView implements SurfaceHolder.Callback
 		final int closureIndexPlayer = indexPlayer;
 		this.mGame.getPlayers().get(closureIndexPlayer).incWins();
 		this.mPainter.setCurrentPath(null);
+		this.mGame.sendRepaint();
 		this.post(new Runnable() {
 			@Override
 			public void run() {
@@ -215,7 +217,6 @@ public class GameFieldView extends SurfaceView implements SurfaceHolder.Callback
 						Toast.LENGTH_LONG).show();
 			}
 		});
-		this.mGame.sendRepaint();
 	}
 
 	 @Override

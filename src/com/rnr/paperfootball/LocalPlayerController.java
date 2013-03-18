@@ -2,8 +2,6 @@ package com.rnr.paperfootball;
 
 import java.util.Vector;
 
-import android.util.Log;
-
 import com.rnr.paperfootball.base.BaseMap;
 import com.rnr.paperfootball.base.BaseMapController;
 import com.rnr.paperfootball.core.Cell;
