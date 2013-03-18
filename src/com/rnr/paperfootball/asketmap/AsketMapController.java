@@ -101,6 +101,24 @@ public class AsketMapController extends MapController {
 		pBall.setColor(this.mGame.getCurrentPlayer().getColor());
 
 		canvas.drawCircle(currentCell.getX() * this.mWidthCell, currentCell.getY() * this.mWidthCell, 3, pBall);
+		// Рисуем ворота
+		Paint pGoal = new Paint();
+		pGoal.setColor(Color.WHITE);
+		pGoal.setStrokeWidth(3);
+		Cell a = this.mGameMap.getCell(new Cell(AsketMap.INDEX_WIDTH_MIN, AsketMap.INDEX_HEIGHT_CENTER - AsketMap.GOAL_LINE_OFFSET));
+		Cell b = this.mGameMap.getCell(new Cell(AsketMap.INDEX_WIDTH_MAX, AsketMap.INDEX_HEIGHT_CENTER - AsketMap.GOAL_LINE_OFFSET));
+		Cell c = this.mGameMap.getCell(new Cell(AsketMap.INDEX_WIDTH_MIN, AsketMap.INDEX_HEIGHT_CENTER + AsketMap.GOAL_LINE_OFFSET));
+		Cell d = this.mGameMap.getCell(new Cell(AsketMap.INDEX_WIDTH_MAX, AsketMap.INDEX_HEIGHT_CENTER + AsketMap.GOAL_LINE_OFFSET));
+
+		float fieldGoal = 4;
+		canvas.drawLine(a.getX() * this.mWidthCell, a.getY() * this.mWidthCell, 
+				a.getX() * this.mWidthCell + fieldGoal, a.getY() * this.mWidthCell, pGoal);
+		canvas.drawLine(b.getX() * this.mWidthCell, b.getY() * this.mWidthCell, 
+				b.getX() * this.mWidthCell - fieldGoal, b.getY() * this.mWidthCell, pGoal);
+		canvas.drawLine(c.getX() * this.mWidthCell, c.getY() * this.mWidthCell, 
+				c.getX() * this.mWidthCell + fieldGoal, c.getY() * this.mWidthCell, pGoal);
+		canvas.drawLine(d.getX() * this.mWidthCell, d.getY() * this.mWidthCell, 
+				d.getX() * this.mWidthCell - fieldGoal, d.getY() * this.mWidthCell, pGoal);
 	}
 	protected float calculateWidthCell(int width, int height) {
 		return Math.min(height / (AsketMap.CELLS_ROW_COUNT - 1), width / (AsketMap.CELLS_COL_COUNT - 1));

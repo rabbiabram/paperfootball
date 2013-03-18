@@ -41,9 +41,6 @@ public class AsketMap extends Map {
 		this.mCurrent = this.getCell(new Cell(AsketMap.INDEX_WIDTH_CENTER, AsketMap.INDEX_HEIGHT_CENTER));
 
 		for (int y = AsketMap.INDEX_HEIGHT_MIN; y < AsketMap.INDEX_HEIGHT_MAX; y++) {
-
-			if ((y < AsketMap.INDEX_HEIGHT_CENTER - AsketMap.GOAL_LINE_OFFSET) ||
-					(y >= AsketMap.INDEX_HEIGHT_CENTER + AsketMap.GOAL_LINE_OFFSET)) {
 				Cell a0 = this.getCell(new Cell(AsketMap.INDEX_WIDTH_MIN, y));
 				Cell b0 = this.getCell(new Cell(AsketMap.INDEX_WIDTH_MIN, y + 1));
 				Cell a1 = this.getCell(new Cell(AsketMap.INDEX_WIDTH_MAX, y));
@@ -51,8 +48,6 @@ public class AsketMap extends Map {
 
 				this.mLinks.add(new Link(a0, b0));
 				this.mLinks.add(new Link(a1, b1));
-			}
-
 		}
 		this.mGoals.add(this.getCell(new Cell(AsketMap.INDEX_WIDTH_MAX, AsketMap.INDEX_HEIGHT_CENTER)));
 		this.mGoals.add(this.getCell(new Cell(AsketMap.INDEX_WIDTH_MIN, AsketMap.INDEX_HEIGHT_CENTER)));
