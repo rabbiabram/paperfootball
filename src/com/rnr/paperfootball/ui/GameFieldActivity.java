@@ -85,6 +85,9 @@ public class GameFieldActivity extends Activity {
 		case R.id.new_match:
 			this.mGame.startNew();
 			return true;
+		case R.id.turn_undo:
+			this.mGameFieldView.undo();
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		

@@ -2,6 +2,8 @@ package com.rnr.paperfootball;
 
 import java.util.Vector;
 
+import android.util.Log;
+
 import com.rnr.paperfootball.base.BaseMap;
 import com.rnr.paperfootball.base.BaseMapController;
 import com.rnr.paperfootball.core.Cell;
@@ -16,6 +18,7 @@ public class LocalPlayerController implements TouchHandler, PathGetter {
 	Cell mOldCell;
 	private BaseMap mMap;
 	private boolean mIsStopped;
+	private boolean mCanUndo = false;
 	public LocalPlayerController() {
 		this.mIsStart = false;
 	}
@@ -44,6 +47,8 @@ public class LocalPlayerController implements TouchHandler, PathGetter {
 			return false;
 		} else {
 			this.mPath.add(cell);
+			
+			this.mCanUndo = true;
 
 			if (mMap.validate(this.mPath, true)) {
 				mapController.setCurrentPath(this.mPath);
@@ -61,6 +66,7 @@ public class LocalPlayerController implements TouchHandler, PathGetter {
 		this.mPath = new Vector<Cell>();
 		this.mMap = gameMap;
 		this.mOldCell = null;
+		this.mCanUndo = false;
 
 		synchronized (this.mPath) {
 			this.mIsStart = true;
@@ -85,5 +91,15 @@ public class LocalPlayerController implements TouchHandler, PathGetter {
 			this.mPath.notifyAll();
 		}
 	}
-
+	@Override
+	public void undo(BaseMapController mapController) {
+		if (this.mCanUndo) {
+			this.mCanUndo = false;
+			if (this.mPath.size() > 0) {
+				this.mPath.remove(this.mPath.lastElement());
+				this.mOldCell = (this.mPath.size() > 0)?(this.mPath.lastElement()):(null);
+				mapController.setCurrentPath(this.mPath);
+			}
+		}
+	}
 }

@@ -76,7 +76,7 @@ public class AsketMapController extends MapController {
 
 		Cell currentCell = this.mGameMap.getCurrent();
 		// Рисуем путь
-		if (this.mCurrentPath != null) {
+		if ((this.mCurrentPath != null) && (this.mCurrentPath.size() > 0)) {
 			Paint pPathLine = new Paint();
 
 			pPathLine.setColor(Color.WHITE);

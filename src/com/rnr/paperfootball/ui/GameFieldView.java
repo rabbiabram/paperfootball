@@ -204,7 +204,7 @@ public class GameFieldView extends SurfaceView implements SurfaceHolder.Callback
 	@Override
 	public void endOfGame(int indexPlayer) {
 		final int closureIndexPlayer = indexPlayer;
-		mGame.getPlayers().get(closureIndexPlayer).incWins();
+		this.mGame.getPlayers().get(closureIndexPlayer).incWins();
 		this.mPainter.setCurrentPath(null);
 		this.post(new Runnable() {
 			@Override
@@ -215,7 +215,7 @@ public class GameFieldView extends SurfaceView implements SurfaceHolder.Callback
 						Toast.LENGTH_LONG).show();
 			}
 		});
-		mGame.sendRepaint();
+		this.mGame.sendRepaint();
 	}
 
 	 @Override
@@ -225,4 +225,11 @@ public class GameFieldView extends SurfaceView implements SurfaceHolder.Callback
 	     this.mWidth = MeasureSpec.getSize(widthMeasureSpec);
 	     this.mHeight = MeasureSpec.getSize(heightMeasureSpec);
 	 }
+
+	public void undo() {
+		for (TouchHandler handler : this.mTouchHandler) {
+			handler.undo(this.mPainter);
+		}
+		this.mGame.sendRepaint();
+	}
 }
